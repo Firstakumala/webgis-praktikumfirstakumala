@@ -26,27 +26,27 @@
         }).addTo(mymap);
         // --- Marker (Objek Titik) ---
         var marker = L.marker([-7.968364159822983, 110.26032269515781]).addTo(mymap);
-        marker.bindPopup('<b>Lokasi A</b><br>Deskripsi lokasi.');
+        marker.bindPopup('<b>Yayasan Assalam Sanden</b><br>KB, PAUD, TK, SD, dan SMP IT Assalaam Sanden');
         // --- Circle (Objek Lingkaran) ---
         var circle = L.circle([-7.966687623001714, 110.26564264754832], {
             color: '#FF1493', fillColor: '#FFC0CB',
             fillOpacity: 0.5, radius: 200
         }).addTo(mymap);
-        circle.bindPopup('Radius 100 m dari titik ini.');
+        circle.bindPopup('Radius 100 m dari titik ini, pertigaan di depan SMP N 1 Sanden');
         // --- Polygon (Objek Area) ---
         var polygon = L.polygon([
             [-7.965269636142821, 110.26511155432235], [-7.966528108671071, 110.26511155432235],
             [-7.966528108671071, 110.26608239524455], [-7.965269636142821, 110.26608239524455]
         ], { color: '#2E8B58', fillColor: '#00FF7F', fillOpacity: 0.3 })
             .addTo(mymap);
-        polygon.bindPopup('Area Kawasan Titik Kumpul Evakuasi');
+        polygon.bindPopup('Area Kawasan Titik Kumpul Evakuasi Tsunami, Lapangan Murtigading');
         // --- Polyline (Objek Garis) ---
         var polyline = L.polyline([
             [-7.968351476333936, 110.26166923894294], [-7.968326213965341, 110.2623324641018],
             [-7.967762020642411, 110.2623324641018], [-7.966633631665729, 110.26269808822849], [-7.9667262607291605, 110.2647132723672], [-7.965732602413723, 110.26486632432835]
         ], { color: '#FF0000', weight: 3, opacity: 0.8 })
             .addTo(mymap);
-        polyline.bindPopup('Jalur Utama Evakuasi');
+        polyline.bindPopup('Jalur Utama Evakuasi Tercepat dan Teraman');
     </script>
 </body>
 
