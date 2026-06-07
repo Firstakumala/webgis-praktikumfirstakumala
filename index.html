@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul Belajar TIG — UAS</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --blue:#1a56db;--blue-light:#e8f0fe;--blue-dark:#1239a0;
+    --green:#057a55;--green-light:#def7ec;
+    --amber:#92400e;--amber-light:#fef3c7;
+    --red:#9b1c1c;--red-light:#fde8e8;
+    --purple:#5521b5;--purple-light:#edebfe;
+    --teal:#005f73;--teal-light:#e0f7f4;
+    --gray:#374151;--gray-light:#f3f4f6;--gray-mid:#6b7280;
+    --bg:#f9fafb;--white:#ffffff;
+    --border:#e5e7eb;--border-dark:#d1d5db;
+    --text:#111827;--text-muted:#6b7280;
+    --radius:8px;--radius-lg:12px;
+    --shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 4px 16px rgba(0,0,0,.12);
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#0f2d6b 0%,#1a56db 60%,#2563eb 100%);color:#fff;padding:2rem 1.5rem 1.5rem;text-align:center}
+  .header h1{font-size:1.75rem;font-weight:700;margin-bottom:.4rem}
+  .header p{opacity:.85;font-size:.95rem}
+  .header-badges{display:flex;gap:.5rem;justify-content:center;margin-top:.75rem;flex-wrap:wrap}
+  .hbadge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:.25rem .75rem;font-size:.75rem}
+
+  /* NAV */
+  .nav-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+  .nav{display:flex;overflow-x:auto;padding:.5rem 1rem;gap:.4rem;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-btn{flex-shrink:0;padding:.45rem 1rem;border-radius:20px;border:1px solid var(--border-dark);background:transparent;cursor:pointer;font-size:.82rem;font-weight:500;color:var(--text-muted);transition:all .15s;white-space:nowrap}
+  .nav-btn:hover{background:var(--gray-light);color:var(--text)}
+  .nav-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  /* MAIN */
+  .main{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
+  .section{display:none}
+  .section.active{display:block}
+
+  /* SECTION HEADER */
+  .sec-header{margin-bottom:1.25rem}
+  .sec-title{font-size:1.3rem;font-weight:700;color:var(--text);margin-bottom:.25rem}
+  .sec-sub{color:var(--text-muted);font-size:.9rem}
+
+  /* CARDS */
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+  .card-title{font-size:1rem;font-weight:600;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;color:var(--text)}
+  .card-title .icon{font-size:1.1rem}
+
+  /* BADGES */
+  .badge{display:inline-block;font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:4px}
+  .badge-blue{background:var(--blue-light);color:var(--blue-dark)}
+  .badge-green{background:var(--green-light);color:var(--green)}
+  .badge-amber{background:var(--amber-light);color:var(--amber)}
+  .badge-red{background:var(--red-light);color:var(--red)}
+  .badge-purple{background:var(--purple-light);color:var(--purple)}
+  .badge-teal{background:var(--teal-light);color:var(--teal)}
+
+  /* GRIDS */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+  @media(max-width:600px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+
+  /* FLOW STEPS */
+  .flow{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;font-size:.82rem;margin:.5rem 0}
+  .flow-item{padding:.3rem .75rem;border-radius:6px;font-weight:500}
+  .flow-arrow{color:var(--text-muted);font-size:.8rem}
+
+  /* STEP LIST */
+  .steps{display:flex;flex-direction:column;gap:.6rem}
+  .step{display:flex;gap:.75rem;align-items:flex-start}
+  .step-num{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;margin-top:1px}
+  .step-text{font-size:.88rem;color:var(--gray);line-height:1.55;flex:1}
+  .step-text strong{color:var(--text)}
+
+  /* TREE / BULLET LIST */
+  .tree-list{list-style:none;padding-left:.75rem;border-left:2px solid var(--border-dark)}
+  .tree-list li{font-size:.85rem;color:var(--gray);padding:.25rem 0;line-height:1.55}
+  .tree-list li strong{color:var(--text)}
+
+  /* TABLE */
+  .tbl{width:100%;border-collapse:collapse;font-size:.83rem}
+  .tbl th{background:var(--gray-light);padding:.5rem .75rem;text-align:left;font-weight:600;font-size:.78rem;color:var(--gray);border-bottom:2px solid var(--border-dark)}
+  .tbl td{padding:.5rem .75rem;border-bottom:1px solid var(--border);color:var(--gray);vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl tr:hover td{background:var(--gray-light)}
+
+  /* HIGHLIGHT BOX */
+  .hbox{padding:.75rem 1rem;border-radius:var(--radius);font-size:.85rem;line-height:1.6;margin:.5rem 0}
+  .hbox-blue{background:var(--blue-light);color:var(--blue-dark);border-left:3px solid var(--blue)}
+  .hbox-green{background:var(--green-light);color:var(--green);border-left:3px solid var(--green)}
+  .hbox-amber{background:var(--amber-light);color:var(--amber);border-left:3px solid #d97706}
+  .hbox-red{background:var(--red-light);color:var(--red);border-left:3px solid #ef4444}
+  .hbox-purple{background:var(--purple-light);color:var(--purple);border-left:3px solid #7c3aed}
+
+  /* TIER ROWS */
+  .tier-row{display:grid;grid-template-columns:130px 1fr;gap:.75rem;margin-bottom:.6rem;align-items:start}
+  .tier-lbl{font-size:.8rem;font-weight:600;padding:.4rem .6rem;border-radius:var(--radius);text-align:center}
+  .tier-desc{font-size:.85rem;color:var(--gray);line-height:1.55;padding-top:2px}
+  .tier-desc strong{color:var(--text)}
+
+  /* ACCORDION */
+  .acc-btn{width:100%;text-align:left;background:transparent;border:none;padding:.75rem 0;cursor:pointer;font-size:.9rem;font-weight:600;color:var(--text);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+  .acc-body{font-size:.85rem;color:var(--gray);line-height:1.65;padding:.75rem 0 .5rem;display:none}
+  .acc-body.open{display:block}
+  .acc-body strong{color:var(--text)}
+  .acc-arrow{transition:transform .2s;font-size:.8rem;color:var(--text-muted)}
+  .acc-btn.open .acc-arrow{transform:rotate(180deg)}
+
+  /* COMPARE CARDS */
+  .cmp-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:.9rem;background:#fff}
+  .cmp-card.featured{border:2px solid var(--blue);position:relative}
+  .cmp-head{font-size:.95rem;font-weight:700;margin-bottom:.5rem}
+  .cmp-item{font-size:.8rem;color:var(--gray);margin-bottom:.35rem;display:flex;gap:.5rem;align-items:flex-start}
+  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+  .dot-green{background:#10b981}
+  .dot-amber{background:#f59e0b}
+  .dot-red{background:#ef4444}
+  .dot-blue{background:#3b82f6}
+
+  /* EVOLUTION BAR */
+  .evo-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:.5rem 0}
+  .evo-item{text-align:center;padding:.75rem .5rem;border:1px solid var(--border);border-radius:var(--radius);font-size:.78rem}
+  .evo-item.current{background:var(--blue-light);border-color:var(--blue)}
+  .evo-title{font-weight:700;color:var(--text);margin-bottom:.2rem}
+  .evo-sub{color:var(--text-muted)}
+  .evo-item.current .evo-title{color:var(--blue-dark)}
+
+  /* SCALE ITEMS */
+  .scale-item{padding:.75rem 1rem;border-radius:var(--radius);border-left:4px solid;margin-bottom:.6rem}
+
+  /* QUIZ */
+  .quiz-prog-wrap{margin-bottom:1rem}
+  .quiz-prog-text{font-size:.82rem;color:var(--text-muted);margin-bottom:.35rem}
+  .quiz-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+  .quiz-bar-inner{height:100%;background:var(--blue);border-radius:3px;transition:width .4s}
+  .quiz-q{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:1rem;line-height:1.55}
+  .quiz-cat{margin-bottom:.5rem}
+  .quiz-opts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+  .quiz-opt{width:100%;text-align:left;background:#fff;border:1.5px solid var(--border-dark);border-radius:var(--radius);padding:.7rem 1rem;cursor:pointer;font-size:.88rem;color:var(--gray);transition:all .15s;line-height:1.5}
+  .quiz-opt:hover:not([disabled]){border-color:var(--blue);background:var(--blue-light);color:var(--blue-dark)}
+  .quiz-opt.correct{background:var(--green-light);border-color:var(--green);color:var(--green);font-weight:600}
+  .quiz-opt.wrong{background:var(--red-light);border-color:#ef4444;color:var(--red)}
+  .quiz-opt[disabled]{cursor:default}
+  .quiz-explain{background:var(--amber-light);border:1px solid #fbbf24;border-radius:var(--radius);padding:.75rem 1rem;font-size:.85rem;color:var(--amber);line-height:1.65;display:none;margin-bottom:.75rem}
+  .quiz-explain strong{color:var(--amber)}
+  .quiz-nav{display:flex;justify-content:space-between;align-items:center}
+  .btn{padding:.55rem 1.25rem;border-radius:var(--radius);border:1.5px solid var(--border-dark);background:#fff;cursor:pointer;font-size:.88rem;font-weight:500;color:var(--text);transition:all .15s}
+  .btn:hover{background:var(--gray-light)}
+  .btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .btn-primary:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+  .result-box{text-align:center;padding:2rem 1rem}
+  .result-emoji{font-size:3.5rem;margin-bottom:.75rem}
+  .result-score{font-size:2.5rem;font-weight:800;margin-bottom:.25rem}
+  .result-msg{color:var(--text-muted);font-size:.95rem;margin-bottom:1.5rem}
+
+  /* SUMMARY METRICS */
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:.5rem 0}
+  @media(max-width:600px){.metric-grid{grid-template-columns:repeat(2,1fr)}}
+  .metric{background:var(--gray-light);border-radius:var(--radius);padding:.75rem;text-align:center}
+  .metric-val{font-size:1.4rem;font-weight:700;color:var(--text)}
+  .metric-lbl{font-size:.73rem;color:var(--text-muted);margin-top:.2rem}
+
+  /* DIVIDER */
+  hr.div{border:none;border-top:1px solid var(--border);margin:.75rem 0}
+
+  /* REVIEW CARD */
+  .review-item{margin-bottom:1rem;padding:.9rem 1rem;border-radius:var(--radius);border:1px solid var(--border)}
+  .review-item.right{border-color:var(--green);background:var(--green-light)}
+  .review-item.wrong{border-color:#f87171;background:var(--red-light)}
+  .review-q{font-size:.85rem;font-weight:600;margin-bottom:.4rem}
+  .review-a{font-size:.82rem;margin-bottom:.3rem}
+  .review-explain{font-size:.8rem;line-height:1.55}
+
+  /* ESSAY */
+  .essay-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.25rem;box-shadow:var(--shadow)}
+  .essay-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:.8rem;font-weight:700;flex-shrink:0}
+  .essay-q-row{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.9rem}
+  .essay-q-text{font-size:.95rem;font-weight:600;color:var(--text);line-height:1.6;flex:1}
+  .essay-toggle{background:var(--blue-light);border:1px solid var(--blue);color:var(--blue-dark);border-radius:var(--radius);padding:.4rem .9rem;cursor:pointer;font-size:.8rem;font-weight:600;white-space:nowrap;transition:all .15s}
+  .essay-toggle:hover{background:var(--blue);color:#fff}
+  .essay-answer{display:none;background:var(--gray-light);border-radius:var(--radius);padding:1rem;margin-top:.5rem;border-left:3px solid var(--blue)}
+  .essay-answer.open{display:block}
+  .essay-answer h4{font-size:.85rem;font-weight:700;color:var(--blue-dark);margin-bottom:.5rem}
+  .essay-answer p{font-size:.85rem;color:var(--gray);line-height:1.7;margin-bottom:.5rem}
+  .essay-answer ul{list-style:none;padding-left:0}
+  .essay-answer ul li{font-size:.84rem;color:var(--gray);padding:.22rem 0;line-height:1.6}
+  .essay-answer ul li::before{content:"▸ ";color:var(--blue);font-weight:700}
+  .essay-answer strong{color:var(--text)}
+  .essay-answer .key-point{background:var(--amber-light);border:1px solid #fbbf24;border-radius:6px;padding:.5rem .75rem;font-size:.82rem;color:var(--amber);margin-top:.5rem;line-height:1.6}
+  .essay-poin{display:flex;gap:.4rem;align-items:center;font-size:.75rem;font-weight:600;color:var(--text-muted);margin-bottom:.4rem}
+
+  .chip{display:inline-block;padding:.25rem .6rem;border-radius:4px;font-size:.78rem;font-weight:500;border:1px solid var(--border-dark);margin:.15rem;color:var(--gray)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📡 Modul Belajar TIG</h1>
+  <p>Teknologi Informasi Geospasial — Persiapan UAS</p>
+  <div class="header-badges">
+    <span class="hbadge">Universitas Gadjah Mada</span>
+    <span class="hbadge">Nur M. Farda & Sandy</span>
+    <span class="hbadge">9 Topik Utama</span>
+    <span class="hbadge">20 Pilgan + 8 Essay</span>
+    <span class="hbadge">GNSS · LiDAR · GPR · IoT</span>
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav" id="main-nav">
+    <button class="nav-btn active" onclick="showSec('os',this)">💻 Sistem Operasi</button>
+    <button class="nav-btn" onclick="showSec('gis-software',this)">🖥️ GIS Software</button>
+    <button class="nav-btn" onclick="showSec('gnss',this)">🛰️ GNSS & Pemosisian</button>
+    <button class="nav-btn" onclick="showSec('hardware',this)">🔧 GIS Hardware</button>
+    <button class="nav-btn" onclick="showSec('lidar',this)">🔦 LiDAR</button>
+    <button class="nav-btn" onclick="showSec('gpr',this)">📡 GPR</button>
+    <button class="nav-btn" onclick="showSec('webserver',this)">🌐 Web Server & DNS</button>
+    <button class="nav-btn" onclick="showSec('arsitektur',this)">🏗️ Arsitektur SIG</button>
+    <button class="nav-btn" onclick="showSec('enterprise',this)">🏢 Enterprise GIS</button>
+    <button class="nav-btn" onclick="showSec('iot',this)">📶 IoT</button>
+    <button class="nav-btn" onclick="showSec('manajemen',this)">📋 Manajemen Proyek</button>
+    <button class="nav-btn" onclick="showSec('aplikasi',this)">🗺️ Aplikasi TIG</button>
+    <button class="nav-btn" onclick="showSec('quiz',this)">✅ Latihan Pilgan (20)</button>
+    <button class="nav-btn" onclick="showSec('essay',this)">📝 Essay HOTS (8)</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- =========================================
+     SECTION 1: SISTEM OPERASI
+========================================== -->
+<div id="os" class="section active">
+  <div class="sec-header">
+    <div class="sec-title">💻 Sistem Operasi (OS)</div>
+    <div class="sec-sub">Fondasi software yang menjalankan semua aplikasi GIS di atas hardware</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚙️</span> Definisi & Peran OS dalam GIS</div>
+    <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.75rem">
+      OS adalah perangkat lunak sistem yang mengelola semua sumber daya komputer dan menjadi jembatan antara hardware dan aplikasi. Dalam konteks GIS, OS menentukan kompatibilitas software, kinerja analisis, dan stabilitas server.
+    </p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Mengatur file & folder</strong> — manajemen data geospasial (.shp, .tif, .gpkg, .geojson)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Menjalankan aplikasi</strong> — ArcGIS Pro, QGIS, GeoServer berjalan di atas OS</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Mengatur perangkat I/O</strong> — keyboard, mouse, printer, GPS receiver, plotter</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Memory & storage + keamanan</strong> — penting untuk keamanan data spasial rahasia</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Prioritas proses</strong> — mengatur ketika banyak aplikasi GIS berjalan bersamaan (multitasking)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔄</span> Alur Kerja OS</div>
+    <div class="flow">
+      <span class="flow-item" style="background:var(--blue-light);color:var(--blue-dark)">User Input</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-item" style="background:var(--purple-light);color:var(--purple)">OS</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-item" style="background:var(--green-light);color:var(--green)">Application Layer</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-item" style="background:var(--amber-light);color:var(--amber)">System Software</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-item" style="background:var(--gray-light);color:var(--gray)">Hardware Layer</span>
+    </div>
+    <div style="font-size:.8rem;color:var(--text-muted);margin-top:.5rem">
+      <strong>System Software:</strong> drivers, utilities, OS internal &nbsp;|&nbsp; <strong>Hardware:</strong> CPU, memory, storage, GPU, Input &amp; Output
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="cmp-card">
+      <div class="cmp-head">🪟 Windows</div>
+      <span class="badge badge-amber">Industri dominan</span>
+      <div style="margin-top:.5rem">
+        <div class="cmp-item"><span class="dot dot-green"></span>ArcGIS Pro & Enterprise penuh</div>
+        <div class="cmp-item"><span class="dot dot-green"></span>Kompatibilitas hardware tinggi</div>
+        <div class="cmp-item"><span class="dot dot-green"></span>GUI user-friendly</div>
+        <div class="cmp-item"><span class="dot dot-amber"></span>Berbayar & resource besar</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span>Windows 1985 (MS-DOS) → Win 11</div>
+      </div>
+    </div>
+    <div class="cmp-card featured">
+      <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);white-space:nowrap"><span class="badge badge-blue">Server GIS Terbaik</span></div>
+      <div class="cmp-head">🐧 Linux</div>
+      <div style="margin-top:.4rem">
+        <div class="cmp-item"><span class="dot dot-green"></span>GeoServer, PostGIS, QGIS</div>
+        <div class="cmp-item"><span class="dot dot-green"></span>Open source & gratis</div>
+        <div class="cmp-item"><span class="dot dot-green"></span>Stabil server 24/7</div>
+        <div class="cmp-item"><span class="dot dot-green"></span>Ringan, efisien resource</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span>Ubuntu, Debian, Fedora, Mint, openSUSE</div>
+      </div>
+    </div>
+    <div class="cmp-card">
+      <div class="cmp-head">🍎 macOS / Mobile</div>
+      <span class="badge badge-teal">Peneliti & Lapangan</span>
+      <div style="margin-top:.5rem">
+        <div class="cmp-item"><span class="dot dot-amber"></span>macOS: peneliti, dukungan GIS terbatas</div>
+        <div class="cmp-item"><span class="dot dot-green"></span>iOS/Android: field data collection</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span>Android ver 16 (terbaru)</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span>iOS dikembangkan dari basis Linux</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title"><span class="icon">🐧</span> Linux untuk GIS — Detail Distribusi</div>
+    <div class="grid2">
+      <div>
+        <div class="hbox hbox-blue" style="margin-bottom:.5rem"><strong>General Purpose</strong><br>Ubuntu, Fedora, Debian, Linux Mint, openSUSE — bisa langsung pakai tanpa install codec tambahan, cocok untuk workstation GIS</div>
+      </div>
+      <div>
+        <div class="hbox hbox-green"><strong>Lightweight / Server</strong><br>Versi ringan untuk hardware terbatas, ideal untuk server GIS lapangan, deployment cloud VM, container Docker</div>
+      </div>
+    </div>
+    <div class="hbox hbox-amber" style="margin-top:.5rem">
+      💡 <strong>Catatan UAS:</strong> Dalam Enterprise GIS three-tier architecture, Linux paling umum dipakai di <strong>Data Server tier</strong> (PostGIS, Oracle Spatial) karena stabilitas dan efisiensi resource-nya.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Perbandingan OS untuk GIS</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Aspek</th><th>Windows</th><th>Linux</th><th>macOS</th></tr>
+      <tr><td>ArcGIS Pro</td><td>✅ Penuh</td><td>❌ Tidak ada</td><td>❌ Tidak ada</td></tr>
+      <tr><td>QGIS</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>GeoServer</td><td>✅</td><td>✅ Terbaik</td><td>✅</td></tr>
+      <tr><td>Server GIS</td><td>✅ Baik</td><td>✅ Terbaik</td><td>⚠️ Jarang</td></tr>
+      <tr><td>Biaya</td><td>💰 Berbayar</td><td>🆓 Gratis</td><td>💰 Bundled</td></tr>
+      <tr><td>Stabilitas Server</td><td>Baik</td><td>Sangat baik</td><td>Baik</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 1b: GIS SOFTWARE
+========================================== -->
+<div id="gis-software" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🖥️ GIS Software</div>
+    <div class="sec-sub">Perangkat lunak untuk akuisisi, penyimpanan, analisis, dan visualisasi data geospasial</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📖</span> Definisi GIS Software</div>
+    <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.75rem">
+      GIS Software adalah aplikasi yang memungkinkan pengguna untuk <strong>menangkap (capture), menyimpan, memperbarui, memanipulasi, menganalisis, dan menampilkan</strong> semua jenis informasi geografis. Software berjalan di atas OS dan berkomunikasi dengan hardware melalui driver OS. Setiap OS memiliki ekosistem GIS software yang berbeda, dan setiap OS role memiliki GIS task spesifik yang dapat dilakukan.
+    </p>
+    <div class="hbox hbox-blue">
+      <strong>Lapisan Software dalam GIS:</strong> Hardware → OS → System Software (driver, utilities) → GIS Software (Desktop, Server, Web, Mobile) → User / GIS Analyst
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗺️</span> GIS Task per OS Role</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>OS Role</th><th>OS Utama</th><th>GIS Software</th><th>GIS Task yang Dapat Dilakukan</th></tr>
+      <tr>
+        <td><strong>Desktop Analyst / GIS Professional</strong></td>
+        <td>Windows 10/11</td>
+        <td>ArcGIS Pro, QGIS, Global Mapper, AutoCAD Map</td>
+        <td>Digitasi vektor, editing atribut, overlay analysis, kartografi, geoprocessing, spatial statistics, pembuatan peta tematik, layout cetak, proyeksi ulang</td>
+      </tr>
+      <tr>
+        <td><strong>GIS Server Administrator</strong></td>
+        <td>Linux (Ubuntu/Debian/CentOS)</td>
+        <td>GeoServer, MapServer, QGIS Server, deegree, GeoNode</td>
+        <td>Deploy map service (WMS/WFS/WCS), konfigurasi REST API, tile caching, user management, monitoring server performance, integrasi PostGIS</td>
+      </tr>
+      <tr>
+        <td><strong>Spatial Database Administrator</strong></td>
+        <td>Linux / Windows Server</td>
+        <td>PostGIS (PostgreSQL), Oracle Spatial, MS SQL Server Spatial, SpatiaLite</td>
+        <td>Pembuatan spatial database, indexing geometri, query ST_Intersects/ST_Buffer/ST_Union, reprojeksi, backup/restore, performance tuning</td>
+      </tr>
+      <tr>
+        <td><strong>Web GIS Developer</strong></td>
+        <td>Linux / macOS / Windows</td>
+        <td>OpenLayers, Leaflet.js, MapLibre GL, ArcGIS JS API, Cesium (3D)</td>
+        <td>Integrasi WMS/WFS ke web app, interaktivitas peta (click, hover, popup), rendering vektor, 3D globe visualization, tile map integration</td>
+      </tr>
+      <tr>
+        <td><strong>Remote Sensing Analyst</strong></td>
+        <td>Windows / Linux</td>
+        <td>ENVI, ERDAS IMAGINE, SNAP (Sentinel), Google Earth Engine, QGIS + GRASS</td>
+        <td>Klasifikasi citra (supervised/unsupervised), indeks spektral (NDVI, NDWI), SAR processing (InSAR), band compositing, atmospheric correction</td>
+      </tr>
+      <tr>
+        <td><strong>Field Data Collector</strong></td>
+        <td>Android / iOS</td>
+        <td>QField, KOBO Toolbox, Survey123 (ArcGIS), Input, SW Maps</td>
+        <td>Digitasi titik/jalur/poligon di lapangan, pengisian form atribut, foto geotagged, sinkronisasi ke server GIS, navigasi berbasis peta offline</td>
+      </tr>
+      <tr>
+        <td><strong>Enterprise GIS Admin</strong></td>
+        <td>Windows Server / Linux</td>
+        <td>ArcGIS Enterprise (Portal + Server + Data Store), GeoNode</td>
+        <td>Manajemen portal GIS organisasi, publishing hosted services, role-based access control, federasi server, monitoring usage, integrasi dengan ArcGIS Online</td>
+      </tr>
+      <tr>
+        <td><strong>UAV/Drone Processing</strong></td>
+        <td>Windows 10/11 (GPU intensive)</td>
+        <td>Agisoft Metashape, DJI Terra, Pix4D, OpenDroneMap, LiDAR360</td>
+        <td>Fotogrametri SfM (Structure from Motion), pembuatan orthofoto, DSM/DTM, point cloud LiDAR drone, volume calculation, 3D mesh</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔍</span> Kategori Utama GIS Software</div>
+    <div class="grid2">
+      <div class="cmp-card featured">
+        <div class="cmp-head">🗂️ Desktop GIS</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span><strong>ArcGIS Pro</strong> — Esri, Windows only, industri standar</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>QGIS</strong> — Open source, cross-platform, plugin ecosystem</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span><strong>Global Mapper</strong> — Manipulasi format data raster/vektor</div>
+        <div class="cmp-item"><span class="dot dot-amber"></span><strong>ArcGIS 10.x</strong> — Legacy suite (ArcMap, ArcCatalog)</div>
+      </div>
+      <div class="cmp-card">
+        <div class="cmp-head">🌐 Web GIS & Server</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>GeoServer</strong> — Publish WMS/WFS dari PostGIS/file</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>MapServer</strong> — CGI-based map server, performans tinggi</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span><strong>ArcGIS Server</strong> — Enterprise map/feature services</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>GeoNode</strong> — Platform geospasial open source lengkap</div>
+      </div>
+      <div class="cmp-card">
+        <div class="cmp-head">🗄️ Spatial Database</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span><strong>PostGIS</strong> — Ekstensi spasial PostgreSQL, paling populer</div>
+        <div class="cmp-item"><span class="dot dot-amber"></span><strong>Oracle Spatial</strong> — Enterprise, untuk organisasi besar</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span><strong>MS SQL Server + Spatial</strong> — Windows enterprise</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>SpatiaLite</strong> — SQLite + spasial, ringan untuk mobile</div>
+      </div>
+      <div class="cmp-card">
+        <div class="cmp-head">📱 Mobile & Cloud GIS</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>QField</strong> — Mobile GIS berbasis QGIS, open source</div>
+        <div class="cmp-item"><span class="dot dot-blue"></span><strong>ArcGIS Field Maps</strong> — Mobile solution Esri</div>
+        <div class="cmp-item"><span class="dot dot-amber"></span><strong>ArcGIS Online</strong> — Cloud GIS SaaS Esri</div>
+        <div class="cmp-item"><span class="dot dot-green"></span><strong>Google Earth Engine</strong> — Cloud remote sensing analysis</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Fungsi Utama GIS Software</div>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem;color:var(--text)">🔷 Data Management</p>
+        <ul class="tree-list">
+          <li>Import/export berbagai format (SHP, GeoJSON, KML, GeoTIFF, DWG)</li>
+          <li>Proyeksi dan transformasi sistem koordinat</li>
+          <li>Editing geometri dan atribut tabular</li>
+          <li>Metadata management sesuai standar ISO/SNI</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem;color:var(--text)">🔶 Spatial Analysis</p>
+        <ul class="tree-list">
+          <li>Overlay (intersection, union, clip, erase)</li>
+          <li>Buffer analysis, proximity, Thiessen polygon</li>
+          <li>Raster analysis (slope, aspect, hillshade, map algebra)</li>
+          <li>Network analysis (routing, service area, allocation)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem;color:var(--text)">🟣 Visualization & Cartography</p>
+        <ul class="tree-list">
+          <li>Simbologi peta tematik (choropleth, proportional symbols, heat map)</li>
+          <li>Layout dan komposisi peta cetak (print layout)</li>
+          <li>3D visualization (scene, extrusion, draping)</li>
+          <li>Web map publishing dan sharing</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem;color:var(--text)">🟢 Automation & Scripting</p>
+        <ul class="tree-list">
+          <li>Python scripting (ArcPy, PyQGIS, Geopandas)</li>
+          <li>Model Builder / Graphical Modeler (QGIS)</li>
+          <li>Batch processing dan workflow automation</li>
+          <li>REST API untuk integrasi sistem eksternal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="gnss" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🛰️ GNSS & Metode Pemosisian</div>
+    <div class="sec-sub">Cara menentukan koordinat di permukaan Bumi menggunakan satelit navigasi</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🌍</span> Apa itu GNSS? — Position, Velocity, Time (PVT)</div>
+    <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.75rem">
+      <strong>GNSS (Global Navigation Satellite System)</strong> adalah sistem berbasis satelit yang menyediakan informasi <strong>PVT — Position, Velocity, dan Time</strong> secara global, kontinu, dan real-time kepada pengguna di permukaan bumi, di udara, maupun di laut. GNSS bukan hanya GPS — GPS adalah salah satu dari beberapa konstelasi GNSS yang ada.
+    </p>
+    <div class="grid3">
+      <div style="text-align:center;padding:1rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--blue-light)">
+        <div style="font-size:1.8rem;margin-bottom:.3rem">📍</div>
+        <div style="font-weight:700;color:var(--blue-dark);font-size:.95rem">Position</div>
+        <div style="font-size:.8rem;color:var(--blue-dark);margin-top:.3rem">Lintang, bujur, ketinggian (3D koordinat) dari pusat massa bumi</div>
+      </div>
+      <div style="text-align:center;padding:1rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--green-light)">
+        <div style="font-size:1.8rem;margin-bottom:.3rem">🚀</div>
+        <div style="font-weight:700;color:var(--green);font-size:.95rem">Velocity</div>
+        <div style="font-size:.8rem;color:var(--green);margin-top:.3rem">Kecepatan dan arah gerak objek yang membawa receiver GNSS</div>
+      </div>
+      <div style="text-align:center;padding:1rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--amber-light)">
+        <div style="font-size:1.8rem;margin-bottom:.3rem">⏱️</div>
+        <div style="font-weight:700;color:var(--amber);font-size:.95rem">Time</div>
+        <div style="font-size:.8rem;color:var(--amber);margin-top:.3rem">Waktu presisi tinggi (atomic clock level) untuk sinkronisasi sistem</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📡</span> Prinsip Kerja — Menghitung Jarak ke Beberapa Satelit</div>
+    <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.75rem">
+      GNSS menggunakan prinsip <strong>trilateration</strong> — menghitung posisi dengan mengukur jarak (range) ke beberapa satelit. Setiap satelit memancarkan sinyal waktu tepat; receiver mengukur waktu tempuh sinyal dan menghitung jarak: <strong>d = c × Δt</strong> (c = kecepatan cahaya ≈ 300.000 km/s).
+    </p>
+    <div style="background:var(--gray-light);border-radius:var(--radius-lg);padding:1rem;overflow-x:auto">
+      <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:auto">
+        <ellipse cx="260" cy="190" rx="55" ry="22" fill="#c8e6c9" stroke="#388e3c" stroke-width="2"/>
+        <text x="260" y="194" text-anchor="middle" font-size="10" font-weight="bold" fill="#1b5e20">BUMI</text>
+        <circle cx="260" cy="170" r="6" fill="#1a56db"/>
+        <text x="260" y="162" text-anchor="middle" font-size="8.5" fill="#1a56db" font-weight="bold">RECEIVER</text>
+        <circle cx="70" cy="35" r="15" fill="#ffcc02" stroke="#e65100" stroke-width="2"/>
+        <text x="70" y="39" text-anchor="middle" font-size="9" font-weight="bold" fill="#bf360c">SAT 1</text>
+        <circle cx="260" cy="18" r="15" fill="#ffcc02" stroke="#e65100" stroke-width="2"/>
+        <text x="260" y="22" text-anchor="middle" font-size="9" font-weight="bold" fill="#bf360c">SAT 2</text>
+        <circle cx="450" cy="35" r="15" fill="#ffcc02" stroke="#e65100" stroke-width="2"/>
+        <text x="450" y="39" text-anchor="middle" font-size="9" font-weight="bold" fill="#bf360c">SAT 3</text>
+        <circle cx="160" cy="65" r="13" fill="#b3e5fc" stroke="#0277bd" stroke-width="1.5"/>
+        <text x="160" y="69" text-anchor="middle" font-size="8.5" fill="#01579b">SAT 4</text>
+        <line x1="70" y1="50" x2="255" y2="166" stroke="#e65100" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <line x1="260" y1="33" x2="260" y2="164" stroke="#e65100" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <line x1="450" y1="50" x2="265" y2="166" stroke="#e65100" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <line x1="160" y1="78" x2="257" y2="166" stroke="#0277bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="140" y="115" font-size="9" fill="#e65100">r₁=c×Δt₁</text>
+        <text x="265" y="100" font-size="9" fill="#e65100">r₂</text>
+        <text x="370" y="115" font-size="9" fill="#e65100">r₃</text>
+        <text x="198" y="125" font-size="9" fill="#0277bd">r₄(jam)</text>
+        <text x="260" y="215" text-anchor="middle" font-size="9" fill="#555">Min. 4 satelit → solusi unik PVT (X,Y,Z + koreksi waktu)</text>
+      </svg>
+    </div>
+    <div class="steps" style="margin-top:.75rem">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Satelit memancarkan sinyal</strong> berisi waktu transmisi (jam atom) dan posisi satelit (ephemeris)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Receiver mengukur Δt</strong> = selisih waktu terima – waktu kirim → pseudorange = c × Δt</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Butuh 4 satelit minimum</strong>: 3 untuk posisi XYZ (trilateration 3D), 1 untuk koreksi kesalahan jam receiver</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Interseksi 4 sphere pseudorange</strong> memberikan solusi unik → koordinat 3D + waktu presisi</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📚</span> Istilah Generik (Generic Terms) GNSS</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Istilah</th><th>Definisi</th></tr>
+      <tr><td><strong>Konstelasi</strong></td><td>Kumpulan satelit dalam satu sistem GNSS (mis. GPS = 31 satelit aktif)</td></tr>
+      <tr><td><strong>Pseudorange</strong></td><td>Jarak semu dari satelit ke receiver dari waktu tempuh sinyal — mengandung kesalahan jam</td></tr>
+      <tr><td><strong>Carrier Phase</strong></td><td>Pengukuran berbasis fase gelombang pembawa (L1/L2) — lebih presisi, digunakan RTK/PPK</td></tr>
+      <tr><td><strong>Ephemeris</strong></td><td>Data orbit satelit (posisi dan kecepatan satelit di ruang angkasa)</td></tr>
+      <tr><td><strong>Almanac</strong></td><td>Data kasar posisi semua satelit, membantu receiver menentukan satelit mana yang terlihat</td></tr>
+      <tr><td><strong>PDOP</strong></td><td>Position Dilution of Precision — kualitas geometri satelit, makin kecil makin baik (ideal &lt; 2)</td></tr>
+      <tr><td><strong>Multipath</strong></td><td>Sinyal satelit memantul dari bangunan/permukaan sebelum sampai ke receiver → kesalahan</td></tr>
+      <tr><td><strong>Integer Ambiguity</strong></td><td>Jumlah gelombang penuh antara satelit dan receiver — harus diselesaikan untuk RTK akurasi cm</td></tr>
+      <tr><td><strong>Baseline</strong></td><td>Vektor 3D antara base station dan rover dalam pengukuran diferensial</td></tr>
+      <tr><td><strong>Fix / Float</strong></td><td>Status solusi RTK: "Fix" = integer ambiguity diselesaikan (cm-akurat); "Float" = belum terpecahkan</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🛰️</span> Tabel Parameter Konstelasi GNSS</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Parameter</th><th>GPS 🇺🇸</th><th>GLONASS 🇷🇺</th><th>BeiDou 🇨🇳</th><th>Galileo 🇪🇺</th></tr>
+      <tr><td><strong>Pengelola</strong></td><td>DoD Amerika Serikat</td><td>VKS Russia</td><td>CNSA China</td><td>GSA / ESA Uni Eropa</td></tr>
+      <tr><td><strong>Jml Satelit Aktif</strong></td><td>~31</td><td>~24</td><td>~45 (BDS-3)</td><td>~27</td></tr>
+      <tr><td><strong>Orbit</strong></td><td>MEO</td><td>MEO</td><td>MEO+GEO+IGSO</td><td>MEO</td></tr>
+      <tr><td><strong>Ketinggian Orbit</strong></td><td>20.200 km</td><td>19.100 km</td><td>21.528 km (MEO)</td><td>23.222 km</td></tr>
+      <tr><td><strong>Inklinasi</strong></td><td>55°</td><td>64,8°</td><td>55° (MEO)</td><td>56°</td></tr>
+      <tr><td><strong>Sinyal Utama</strong></td><td>L1 1575.42 MHz, L2, L5</td><td>L1, L2 (FDMA+CDMA)</td><td>B1, B2, B3</td><td>E1, E5, E6</td></tr>
+      <tr><td><strong>Datum Referensi</strong></td><td>WGS-84</td><td>PZ-90</td><td>CGCS2000</td><td>GTRF (≈ITRF)</td></tr>
+      <tr><td><strong>Akurasi SPP</strong></td><td>±3–5 m</td><td>±5–7 m</td><td>±2.5–5 m</td><td>±1–3 m</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span> Kelebihan & Kekurangan GNSS</div>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.85rem;font-weight:700;margin-bottom:.5rem;color:var(--green)">✅ Kelebihan</p>
+        <ul class="tree-list">
+          <li><strong>Cakupan global 24/7</strong> — tersedia di mana saja kapan saja</li>
+          <li><strong>Akurasi tinggi</strong> — RTK/PPK mencapai 1–3 cm horizontal</li>
+          <li><strong>3D Positioning</strong> — koordinat lintang, bujur, ketinggian</li>
+          <li><strong>Real-time capability</strong> — RTK memberikan solusi instan</li>
+          <li><strong>Tidak perlu intervisibilitas</strong> — beda dengan Total Station</li>
+          <li><strong>Multi-konstelasi</strong> — GPS+GLONASS+BeiDou+Galileo → lebih banyak satelit</li>
+          <li><strong>Sinkronisasi waktu presisi</strong> — telekomunikasi, perbankan, listrik</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.85rem;font-weight:700;margin-bottom:.5rem;color:var(--red)">❌ Kekurangan</p>
+        <ul class="tree-list">
+          <li><strong>Perlu langit terbuka</strong> — tidak di dalam gedung/terowongan</li>
+          <li><strong>Gangguan ionosfer/troposfer</strong> — kondisi atmosfer mempengaruhi akurasi</li>
+          <li><strong>Multipath error</strong> — sinyal pantul di area urban padat</li>
+          <li><strong>Tidak akurat di lereng curam/lembah</strong> — geometri satelit buruk</li>
+          <li><strong>RTK butuh koneksi ke base/CORS</strong> — bergantung jaringan data</li>
+          <li><strong>Rentan spoofing/jamming</strong> — sinyal bisa diganggu</li>
+          <li><strong>Akurasi vertikal lebih rendah</strong> — ketinggian elipsoid, bukan muka laut</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📻</span> GNSS Receiver — Jenis & Komponen</div>
+    <div style="background:var(--gray-light);border-radius:var(--radius-lg);padding:1rem;overflow-x:auto">
+      <svg viewBox="0 0 560 185" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:auto">
+        <defs><marker id="arx" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#555"/></marker></defs>
+        <rect x="10" y="10" width="100" height="55" rx="8" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+        <text x="60" y="30" text-anchor="middle" font-size="10" font-weight="bold" fill="#1565c0">📡 ANTENA</text>
+        <text x="60" y="45" text-anchor="middle" font-size="8.5" fill="#1565c0">Terima sinyal</text>
+        <text x="60" y="58" text-anchor="middle" font-size="8.5" fill="#1565c0">RF satelit</text>
+        <line x1="110" y1="37" x2="140" y2="37" stroke="#555" stroke-width="2" marker-end="url(#arx)"/>
+        <rect x="140" y="10" width="90" height="55" rx="8" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+        <text x="185" y="30" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#c62828">RF Front</text>
+        <text x="185" y="43" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#c62828">End</text>
+        <text x="185" y="57" text-anchor="middle" font-size="8" fill="#c62828">Filter, amplify</text>
+        <line x1="230" y1="37" x2="258" y2="37" stroke="#555" stroke-width="2" marker-end="url(#arx)"/>
+        <rect x="258" y="10" width="100" height="55" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+        <text x="308" y="28" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2e7d32">Signal</text>
+        <text x="308" y="41" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2e7d32">Processor</text>
+        <text x="308" y="56" text-anchor="middle" font-size="8" fill="#2e7d32">Correlation, PVT</text>
+        <line x1="358" y1="37" x2="388" y2="37" stroke="#555" stroke-width="2" marker-end="url(#arx)"/>
+        <rect x="388" y="10" width="100" height="55" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+        <text x="438" y="28" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#e65100">Output</text>
+        <text x="438" y="43" text-anchor="middle" font-size="8" fill="#e65100">NMEA, RINEX</text>
+        <text x="438" y="57" text-anchor="middle" font-size="8" fill="#e65100">RTK, Binary</text>
+        <text x="280" y="85" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#333">Jenis Receiver GNSS</text>
+        <rect x="10" y="97" width="120" height="75" rx="7" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+        <text x="70" y="115" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e7d32">📱 Handheld</text>
+        <text x="70" y="130" text-anchor="middle" font-size="8.5" fill="#388e3c">Garmin, eTrex</text>
+        <text x="70" y="143" text-anchor="middle" font-size="8.5" fill="#388e3c">Akurasi ±3–5 m</text>
+        <text x="70" y="163" text-anchor="middle" font-size="8" fill="#555">Navigasi, GIS umum</text>
+        <rect x="145" y="97" width="120" height="75" rx="7" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+        <text x="205" y="115" text-anchor="middle" font-size="10" font-weight="bold" fill="#1565c0">🎯 Geodetik</text>
+        <text x="205" y="130" text-anchor="middle" font-size="8.5" fill="#1565c0">Trimble R10, CHC</text>
+        <text x="205" y="143" text-anchor="middle" font-size="8.5" fill="#1565c0">Akurasi ±1–3 cm</text>
+        <text x="205" y="163" text-anchor="middle" font-size="8" fill="#555">Survei, konstruksi</text>
+        <rect x="280" y="97" width="120" height="75" rx="7" fill="#fce4ec" stroke="#c62828" stroke-width="1.5"/>
+        <text x="340" y="115" text-anchor="middle" font-size="10" font-weight="bold" fill="#c62828">⚙️ OEM Module</text>
+        <text x="340" y="130" text-anchor="middle" font-size="8.5" fill="#c62828">u-blox, Ublox M9</text>
+        <text x="340" y="143" text-anchor="middle" font-size="8.5" fill="#c62828">Akurasi ±2–5 m</text>
+        <text x="340" y="163" text-anchor="middle" font-size="8" fill="#555">IoT, kendaraan</text>
+        <rect x="415" y="97" width="120" height="75" rx="7" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+        <text x="475" y="115" text-anchor="middle" font-size="10" font-weight="bold" fill="#e65100">🌐 CORS/Base</text>
+        <text x="475" y="130" text-anchor="middle" font-size="8.5" fill="#e65100">Leica, Trimble Net</text>
+        <text x="475" y="143" text-anchor="middle" font-size="8.5" fill="#e65100">Akurasi sub-mm</text>
+        <text x="475" y="163" text-anchor="middle" font-size="8" fill="#555">Datum, deformasi</text>
+      </svg>
+    </div>
+    <div class="hbox hbox-blue" style="margin-top:.75rem">
+      <strong>Antena GNSS:</strong> Komponen kritis yang menentukan kemampuan penerimaan sinyal. Tipe: <em>Patch antenna</em> (murah, omnidirectional, untuk navigasi umum), <em>Choke ring antenna</em> (geodetik presisi tinggi, meminimalkan multipath — dipakai di stasiun CORS). Antena harus diposisikan dengan fase center yang dikalibrasi.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📍</span> Posisi Absolut — Single Point Positioning (SPP)</div>
+    <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.75rem">
+      Metode penentuan posisi dasar: menentukan koordinat titik secara langsung dari sistem referensi global, <strong>tanpa bergantung pada stasiun referensi lokal</strong>. Posisi ditentukan untuk setiap titik secara independen, direferensikan ke datum global <strong>WGS-84</strong>.
+    </p>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem;color:var(--text)">✅ Karakteristik</p>
+        <ul class="tree-list">
+          <li>Tidak memerlukan stasiun referensi lokal</li>
+          <li>Menggunakan penerima tunggal (SPP)</li>
+          <li>Direferensikan ke datum global WGS-84</li>
+          <li>Pemrosesan sederhana dan cepat</li>
+          <li>Titik bisa diam (statis) atau bergerak (kinematik)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem;color:var(--text)">⚠️ Keterbatasan</p>
+        <ul class="tree-list">
+          <li>Akurasi hanya <strong>±3–10 meter</strong></li>
+          <li>Bergantung kuantitas & kualitas satelit</li>
+          <li>Dipengaruhi geometri satelit (PDOP)</li>
+          <li><strong>Bukan untuk survei presisi</strong></li>
+          <li>Cocok untuk navigasi & tracking saja</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📡</span> Metode Diferensial (DGPS)</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Base station ditempatkan di lokasi yang koordinatnya sudah diketahui pasti</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Base station menerima sinyal satelit dan <strong>menghitung posisinya sendiri</strong></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Perbedaan antara posisi yang diketahui dan yang dihitung = <strong>kesalahan (error)</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Koreksi dikirim ke <strong>rover</strong> via radio/internet — rover menerapkan koreksi → posisi jauh lebih akurat</div></div>
+    </div>
+    <div class="grid2" style="margin-top:.5rem">
+      <div class="hbox hbox-blue"><strong>DGPS Area Lokal (LADGPS)</strong><br>Cakupan terbatas, 1 base station lokal</div>
+      <div class="hbox hbox-purple"><strong>DGPS Area Luas (WADGPS)</strong><br>Jaringan base station, cakupan nasional/regional</div>
+    </div>
+    <div class="grid2" style="margin-top:.5rem">
+      <div class="hbox hbox-green"><strong>GBAS</strong> — Ground-based Augmentation System</div>
+      <div class="hbox hbox-teal" style="background:var(--teal-light);color:var(--teal);border-color:var(--teal)"><strong>SBAS</strong> — Satellite-based Augmentation System</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> RTK — Real-Time Kinematic</div>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem">Prinsip Dasar RTK</p>
+        <ul class="tree-list">
+          <li>Menggunakan <strong>Pseudorange dan Carrier Phase</strong></li>
+          <li>Panjang gelombang GNSS sangat kecil (~19 cm untuk L1)</li>
+          <li>Fraksi panjang gelombang sangat tepat → akurasi <strong>cm-level</strong></li>
+          <li>Integer ambiguity harus diselesaikan → status <strong>FIX</strong></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem">Mode & Keterbatasan</p>
+        <ul class="tree-list">
+          <li><strong>RTK basis tunggal</strong> → 1 base station lokal</li>
+          <li><strong>Jaringan RTK (CORS)</strong> → beberapa base station</li>
+          <li>Memerlukan komunikasi stabil (radio UHF / NTRIP internet)</li>
+          <li>Status FLOAT jika ambiguity belum terpecahkan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hbox hbox-green" style="margin-top:.75rem">
+      ✅ <strong>PPK (Post-Processed Kinematic):</strong> Mirip RTK tapi koreksi dilakukan setelah pengukuran di kantor — ideal untuk UAV/drone. Akurasi sama ±1–3 cm.
+    </div>
+    <div class="hbox hbox-blue" style="margin-top:.5rem">
+      ✅ <strong>Static GNSS:</strong> Receiver diam berjam-jam, untuk datum nasional dan monitoring deformasi — akurasi mm-level.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Perbandingan Lengkap Metode Pemosisian</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Metode</th><th>Akurasi</th><th>Base Station</th><th>Real-time?</th><th>Perangkat</th><th>Aplikasi Utama</th></tr>
+      <tr><td><strong>Absolut (SPP)</strong></td><td>±3–10 m</td><td>Tidak</td><td>Ya</td><td>GPS genggam, smartphone</td><td>Navigasi, tracking kendaraan</td></tr>
+      <tr><td><strong>DGPS</strong></td><td>±0.5–3 m</td><td>Ya</td><td>Ya</td><td>GPS diferensial</td><td>Pemetaan GIS lapangan</td></tr>
+      <tr><td><strong>RTK GNSS</strong></td><td>±1–3 cm</td><td>Ya (real-time)</td><td>Ya</td><td>CHCNAV i50, Trimble R10</td><td>Survei geodetik, konstruksi</td></tr>
+      <tr><td><strong>PPK GNSS</strong></td><td>±1–3 cm</td><td>Ya (post-proc.)</td><td>Tidak</td><td>Sama dengan RTK + log</td><td>UAV mapping, survei remote</td></tr>
+      <tr><td><strong>Static GNSS</strong></td><td>±mm</td><td>Jaringan CORS</td><td>Tidak</td><td>Geodetic dual-freq receiver</td><td>Datum nasional, deformasi</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔗</span> Hubungan GNSS dan GIS</div>
+    <div style="background:var(--gray-light);border-radius:var(--radius-lg);padding:1rem;overflow-x:auto">
+      <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:auto">
+        <defs><marker id="arr3" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#555"/></marker></defs>
+        <rect x="10" y="50" width="155" height="70" rx="10" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+        <text x="87" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0">🛰️ GNSS</text>
+        <text x="87" y="89" text-anchor="middle" font-size="8.5" fill="#1565c0">• Koordinat X,Y,Z presisi</text>
+        <text x="87" y="103" text-anchor="middle" font-size="8.5" fill="#1565c0">• Kecepatan & waktu</text>
+        <text x="87" y="116" text-anchor="middle" font-size="8.5" fill="#1565c0">• Track lintasan</text>
+        <line x1="165" y1="85" x2="195" y2="85" stroke="#555" stroke-width="2" marker-end="url(#arr3)"/>
+        <text x="180" y="78" text-anchor="middle" font-size="8" fill="#333">WHERE</text>
+        <rect x="195" y="25" width="170" height="110" rx="10" fill="#fff3e0" stroke="#e65100" stroke-width="2.5"/>
+        <text x="280" y="47" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">⚙️ INTEGRASI</text>
+        <text x="280" y="65" text-anchor="middle" font-size="8.5" fill="#555">• Mobile GIS (QField+Emlid)</text>
+        <text x="280" y="79" text-anchor="middle" font-size="8.5" fill="#555">• Field data collection</text>
+        <text x="280" y="93" text-anchor="middle" font-size="8.5" fill="#555">• Real-time tracking</text>
+        <text x="280" y="107" text-anchor="middle" font-size="8.5" fill="#555">• Ground truthing RS</text>
+        <text x="280" y="121" text-anchor="middle" font-size="8.5" fill="#555">• Geotagged photo</text>
+        <line x1="365" y1="85" x2="395" y2="85" stroke="#555" stroke-width="2" marker-end="url(#arr3)"/>
+        <text x="380" y="78" text-anchor="middle" font-size="8" fill="#333">WHAT</text>
+        <rect x="395" y="50" width="155" height="70" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+        <text x="472" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e7d32">🗺️ GIS</text>
+        <text x="472" y="89" text-anchor="middle" font-size="8.5" fill="#2e7d32">• Overlay & analisis spasial</text>
+        <text x="472" y="103" text-anchor="middle" font-size="8.5" fill="#2e7d32">• Peta tematik & laporan</text>
+        <text x="472" y="116" text-anchor="middle" font-size="8.5" fill="#2e7d32">• Keputusan berbasis data</text>
+        <text x="280" y="152" text-anchor="middle" font-size="9" fill="#555">GNSS memberikan WHERE • GIS memberikan WHAT, WHY, dan HOW</text>
+      </svg>
+    </div>
+    <div class="hbox hbox-amber" style="margin-top:.5rem">
+      💡 <strong>Contoh integrasi:</strong> Proyek pemetaan batas desa menggunakan GNSS RTK (Trimble/CHCNAV) untuk koordinat batas, data diimport ke QGIS, dioverlay peta dasar BIG, dipublikasikan via GeoServer ke WebGIS desa.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗺️</span> Provider DGPS Global</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Nama Provider</th><th>Pemerintah/Komersial</th><th>Wilayah</th><th>GBAS/SBAS</th></tr>
+      <tr><td>NDGPS</td><td>Pemerintah</td><td>Amerika Serikat</td><td>GBAS</td></tr>
+      <tr><td>SAPOS EPS</td><td>Pemerintah</td><td>Jerman</td><td>GBAS</td></tr>
+      <tr><td>WAAS</td><td>Pemerintah</td><td>Amerika Serikat</td><td>SBAS</td></tr>
+      <tr><td>EGNOS</td><td>Pemerintah</td><td>Eropa</td><td>SBAS</td></tr>
+      <tr><td>GAGAN</td><td>Pemerintah</td><td>India</td><td>SBAS</td></tr>
+      <tr><td>QZSS</td><td>Pemerintah</td><td>Jepang</td><td>SBAS</td></tr>
+      <tr><td>OmniSTAR VBS (Trimble)</td><td>Komersial</td><td>Global</td><td>SBAS</td></tr>
+      <tr><td>StarFire (NavCom/J. Deere)</td><td>Komersial</td><td>Global</td><td>SBAS</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 3: GIS HARDWARE
+========================================== -->
+<div id="hardware" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🔧 GIS Hardware</div>
+    <div class="sec-sub">Perangkat keras untuk pengumpulan, pengolahan, dan visualisasi data geospasial</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📡</span> GNSS/GPS</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Tipe</th><th>Contoh Perangkat</th><th>Data yang Diperoleh</th><th>Akurasi</th></tr>
+      <tr><td><strong>Handheld GPS</strong></td><td>Garmin GPSMAP 64, eTrex, Trimble Juno</td><td>Waypoints, tracks, routes, koordinat</td><td>±3–5 m</td></tr>
+      <tr><td><strong>Geodetic GNSS</strong></td><td>CHCNAV i50, Trimble R10, Topcon Hiper</td><td>Koordinat presisi tinggi (RTK/PPK)</td><td>±1–3 cm</td></tr>
+      <tr><td><strong>Smartphone GPS</strong></td><td>Android/iPhone</td><td>Lokasi + foto geotagged</td><td>±3–5 m</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🚁</span> UAV / Drone</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Tipe</th><th>Contoh Perangkat</th><th>Data yang Diperoleh</th></tr>
+      <tr><td><strong>RGB Camera Drones</strong></td><td>DJI Phantom 4 RTK, DJI Mavic, Parrot Anafi</td><td>Citra udara resolusi tinggi, orthofoto</td></tr>
+      <tr><td><strong>Multispectral Drones</strong></td><td>DJI Mavic 3M, Parrot Sequoia, Sentera</td><td>NDVI, NDWI, kesehatan tanaman/crop health</td></tr>
+      <tr><td><strong>LIDAR Drones</strong></td><td>DJI Matrice + Zenmuse L1, Microdrones MOLIDAR</td><td>Point clouds, model 3D terrain</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🛰️</span> Remote Sensing Sensors (Satelit atau Ground)</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Tipe</th><th>Contoh Satelit/Perangkat</th><th>Data yang Diperoleh</th></tr>
+      <tr><td><strong>Optical Satellites</strong></td><td>Landsat, Sentinel-2, WorldView</td><td>Citra multispektral</td></tr>
+      <tr><td><strong>Radar Satellites (SAR)</strong></td><td>Sentinel-1, TerraSAR-X</td><td>SAR images, peta deformasi</td></tr>
+      <tr><td><strong>Thermal Sensors</strong></td><td>Landsat, MODIS, drone thermal cameras, FLIR</td><td>Suhu permukaan</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📱</span> Field Data Collection Platforms</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Tipe</th><th>Contoh Platform</th><th>Data yang Dikumpulkan</th></tr>
+      <tr><td><strong>Mobile GIS apps</strong></td><td>QField, Collector for ArcGIS, SW Maps</td><td>GPS-linked forms, photos, notes</td></tr>
+      <tr><td><strong>Survey kits</strong></td><td>Emlid Reach + tablet + RTK apps</td><td>Survey-grade field mapping</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span> Total Stations & Theodolites</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Tipe</th><th>Contoh Perangkat</th><th>Data yang Diperoleh</th></tr>
+      <tr><td><strong>Total Station</strong></td><td>Topcon GTS, Leica TS, Sokkia</td><td>Angles, distances, coordinates</td></tr>
+      <tr><td><strong>Digital Theodolite</strong></td><td>Nikon, Bosch GOL, South Group</td><td>Vertical and horizontal angles</td></tr>
+      <tr><td><strong>Laser Rangefinder</strong></td><td>Trimble LaserAce 1000, TruPulse 360i</td><td>Distance, Height, Azimuth</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🌍</span> IoT Environmental Sensors</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Tipe</th><th>Contoh Perangkat</th><th>Data yang Diperoleh</th></tr>
+      <tr><td><strong>Weather Stations</strong></td><td>Davis Vantage Pro, Arduino WX kits</td><td>Suhu, kelembaban, angin, hujan</td></tr>
+      <tr><td><strong>Water Level Sensors</strong></td><td>HOBO U20, Decagon CTD</td><td>Level sungai/danau, tekanan</td></tr>
+      <tr><td><strong>Air Quality Sensors</strong></td><td>PurpleAir, SDS011, PMS7003</td><td>PM2.5, PM10, NO₂, CO₂</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🌑</span> Subsurface Monitoring Hardware <span class="badge badge-purple">Baru</span></div>
+    <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.75rem">
+      Perangkat keras untuk pemantauan dan investigasi di bawah permukaan tanah — krusial untuk mitigasi bencana, eksplorasi geologi, dan manajemen infrastruktur tersembunyi.
+    </p>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Kategori</th><th>Teknologi / Perangkat</th><th>Data yang Diperoleh</th><th>Aplikasi</th></tr>
+      <tr>
+        <td><strong>Ground Penetrating Radar (GPR)</strong></td>
+        <td>GSSI SIR-4000, Mala RAMAC, UTSI GPR</td>
+        <td>Profil refleksi subsurface, kedalaman objek, lapisan stratigrafi</td>
+        <td>Deteksi utilitas bawah tanah, arkeologi, investigasi pondasi, akuifer</td>
+      </tr>
+      <tr>
+        <td><strong>Seismik Refraksi / Refleksi</strong></td>
+        <td>DAQlink III, Geometrics Geode, Sensor Nederland</td>
+        <td>Profil kecepatan gelombang seismik, struktur lapisan tanah</td>
+        <td>Eksplorasi minyak-gas, studi geoteknik, karakterisasi lapisan keras</td>
+      </tr>
+      <tr>
+        <td><strong>Geolistrik (ERT)</strong></td>
+        <td>ABEM Terrameter, AGI SuperSting, Syscal Pro</td>
+        <td>Profil resistivitas tanah 2D/3D</td>
+        <td>Deteksi air tanah, kontaminasi tanah, pemetaan zona lemah</td>
+      </tr>
+      <tr>
+        <td><strong>Inklinometer / Extensometer</strong></td>
+        <td>RST Instruments, Slope Indicator</td>
+        <td>Deformasi internal tanah/batuan, pergerakan vertikal</td>
+        <td>Monitoring lereng rawan longsor, bendungan, terowongan</td>
+      </tr>
+      <tr>
+        <td><strong>Piezo / Piezometer</strong></td>
+        <td>Geokon VW Piezometer, SISGEO</td>
+        <td>Tekanan air pori dalam tanah (pore water pressure)</td>
+        <td>Stabilitas lereng, konsolidasi tanah, monitoring bendungan</td>
+      </tr>
+      <tr>
+        <td><strong>Sensor Gas Bawah Tanah</strong></td>
+        <td>Vaisala GMP343, Ion Science Tiger</td>
+        <td>CO₂, H₂S, SO₂, CH₄ di bawah permukaan</td>
+        <td>Monitoring vulkanik, deteksi kebocoran pipa gas, TPA</td>
+      </tr>
+      <tr>
+        <td><strong>Seismometer / MEMS Sensor</strong></td>
+        <td>Nanometrics Centaur, Episensor FBA</td>
+        <td>Ground motion, percepatan tanah, micro-tremor</td>
+        <td>Monitoring seismik gunung api, infrastruktur kritis</td>
+      </tr>
+      <tr>
+        <td><strong>Downhole Sensor Arrays</strong></td>
+        <td>Campbell Scientific, ADCP bawah tanah</td>
+        <td>Suhu, kelembaban, tekanan pada kedalaman berbeda</td>
+        <td>Monitoring akuifer, pertanian presisi (profil tanah), geothermal</td>
+      </tr>
+    </table>
+    </div>
+    <div class="hbox hbox-teal" style="background:var(--teal-light);color:var(--teal);border-color:var(--teal);margin-top:.5rem">
+      💡 <strong>Integrasi dengan GIS:</strong> Data subsurface monitoring diintegrasikan ke GIS sebagai layer titik atau profil 2D/3D. Contoh: data GPR + koordinat GNSS + QGIS → peta persebaran utilitas bawah tanah; data inklinometer real-time + IoT + WebGIS → dashboard monitoring lereng.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🌋</span> Studi Kasus: Hardware GIS untuk Berbagai Aplikasi</div>
+    <div>
+      <button class="acc-btn" onclick="toggleAcc(this)">🌋 Pemantauan Vulkanik (Gunung Merapi) <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <strong>Thermal Drone (DJI Mavic 3T + FLIR)</strong> → mendeteksi perubahan suhu kawah dan fumarol secara periodik<br>
+        <strong>Radar Satelit SAR (Sentinel-1)</strong> → InSAR untuk mendeteksi deformasi permukaan skala mm multi-temporal<br>
+        <strong>Geodetic GNSS RTK (CHCNAV i50)</strong> → mengukur pergerakan titik kontrol, mendeteksi inflasi/deflasi magma<br>
+        <strong>IoT Sensor Gas (Arduino + MQ-series)</strong> → monitoring SO₂, CO₂, H₂S secara real-time<br>
+        <strong>Optical Satellite (Sentinel-2)</strong> → monitoring perubahan vegetasi dan aliran lahar
+      </div>
+    </div>
+    <div>
+      <button class="acc-btn" onclick="toggleAcc(this)">🏔️ Survei Zona Rawan Longsor <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <strong>GNSS RTK</strong> → pemetaan batas zona rawan dengan presisi cm, mengukur retakan tanah<br>
+        <strong>LIDAR Drone</strong> → model 3D terrain detail, identifikasi retakan dan bidang gelincir<br>
+        <strong>Multispectral Drone</strong> → deteksi kerusakan vegetasi dan perubahan penggunaan lahan<br>
+        <strong>Mobile GIS App (QField)</strong> → input data atribut lapangan langsung ke GIS
+      </div>
+    </div>
+    <div>
+      <button class="acc-btn" onclick="toggleAcc(this)">🌾 Pertanian Presisi (Precision Agriculture) <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <strong>Multispectral Drone (DJI Mavic 3M)</strong> → peta NDVI kesehatan tanaman per petak sawah<br>
+        <strong>Optical Satellite (Sentinel-2)</strong> → monitoring lahan pertanian skala luas, kalender tanam<br>
+        <strong>IoT Weather Station (Davis Vantage Pro)</strong> → data iklim mikro untuk prediksi serangan hama<br>
+        <strong>Handheld GPS (Garmin)</strong> → batas lahan dan titik sampling tanah
+      </div>
+    </div>
+    <div>
+      <button class="acc-btn" onclick="toggleAcc(this)">🏙️ Pemetaan Tata Ruang Kota <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <strong>RGB Drone</strong> → orthofoto kawasan untuk update peta dasar<br>
+        <strong>Total Station / Theodolite</strong> → pengukuran bangunan dan infrastruktur presisi<br>
+        <strong>Mobile GIS App (Collector for ArcGIS)</strong> → survei izin bangunan dan inventarisasi aset<br>
+        <strong>Optical Satellite (WorldView)</strong> → monitoring perubahan penggunaan lahan, deteksi bangunan baru
+      </div>
+    </div>
+    <div>
+      <button class="acc-btn" onclick="toggleAcc(this)">🌊 Pemantauan Banjir & Hidrologi <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <strong>IoT Water Level Sensor (HOBO U20)</strong> → monitoring ketinggian muka air sungai real-time<br>
+        <strong>Radar Satellite SAR (Sentinel-1)</strong> → pemetaan genangan banjir karena SAR menembus awan<br>
+        <strong>Optical Satellite (Landsat, MODIS)</strong> → perubahan tutupan lahan, deforestasi DAS<br>
+        <strong>GNSS RTK</strong> → pengukuran profil melintang sungai untuk pemodelan hidraulik
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 4: ARSITEKTUR SIG
+========================================== -->
+<div id="arsitektur" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🏗️ Arsitektur SIG</div>
+    <div class="sec-sub">Struktur sistem dari project hingga enterprise (Longley, 2005)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span> Skala Implementasi GIS</div>
+    <div class="scale-item" style="background:var(--blue-light);border-color:var(--blue)">
+      <strong style="color:var(--blue-dark)">Project GIS</strong>
+      <p style="font-size:.83rem;color:var(--blue-dark);margin-top:.2rem">1 aplikasi, 1 komputer, 1 database. Untuk kebutuhan spesifik satu proyek. Contoh: survei batas desa sekali pakai.</p>
+    </div>
+    <div class="scale-item" style="background:var(--teal-light);border-color:var(--teal)">
+      <strong style="color:var(--teal)">Workgroup / Departmental GIS</strong>
+      <p style="font-size:.83rem;color:var(--teal);margin-top:.2rem">Beberapa pengguna dalam 1 departemen, 1 database bersama. Contoh: Dinas Tata Ruang Kabupaten, Bagian GIS PLN.</p>
+    </div>
+    <div class="scale-item" style="background:var(--purple-light);border-color:var(--purple)">
+      <strong style="color:var(--purple)">Enterprise GIS</strong>
+      <p style="font-size:.83rem;color:var(--purple);margin-top:.2rem">Seluruh organisasi, banyak departemen, database terpusat & terhubung jaringan. Contoh: BIG (Badan Informasi Geospasial), Pemprov.</p>
+    </div>
+    <div class="scale-item" style="background:var(--gray-light);border-color:var(--gray)">
+      <strong style="color:var(--gray)">Societal GIS</strong>
+      <p style="font-size:.83rem;color:var(--text-muted);margin-top:.2rem">Skala masyarakat / nasional / global. Contoh: OpenStreetMap, Google Maps, NSDI (National Spatial Data Infrastructure).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏛️</span> Three-Tier Architecture</div>
+    <p style="font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:.75rem">Arsitektur tiga lapis adalah fondasi sistem GIS modern — memisahkan antarmuka pengguna, logika bisnis, dan data.</p>
+    <div class="tier-row">
+      <div class="tier-lbl" style="background:var(--blue-light);color:var(--blue-dark)">1. Presentation</div>
+      <div class="tier-desc"><strong>User Interface</strong> — tampilan untuk pengguna. Browser, ArcGIS Pro, aplikasi mobile, WebGIS. Menerima input dan menampilkan hasil analisis spasial.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-lbl" style="background:var(--purple-light);color:var(--purple)">2. Business Logic</div>
+      <div class="tier-desc"><strong>Tools / Application Server</strong> — memproses permintaan, menjalankan analisis spasial, logika bisnis GIS. Contoh: ArcGIS Server, GeoServer, MapServer.</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-lbl" style="background:var(--green-light);color:var(--green)">3. Data Server</div>
+      <div class="tier-desc"><strong>Data Management</strong> — menyimpan & mengelola database spasial. Contoh: PostGIS, ArcSDE (SDE DBMS), Oracle Spatial, Microsoft SQL Server + Spatial.</div>
+    </div>
+    <div class="hbox hbox-blue" style="margin-top:.75rem">
+      💡 <strong>Desktop GIS</strong> = 2-tier (client + data server). <strong>Web/Network GIS</strong> = 2/3-tier (browser + application server + data server). Dalam desktop, business logic ada di sisi client.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔄</span> Evolusi Pola Arsitektur GIS</div>
+    <div class="evo-bar">
+      <div class="evo-item"><div class="evo-title">File Based</div><div class="evo-sub">Stand alone desktop, 1 user, 1 komputer</div></div>
+      <div class="evo-item"><div class="evo-title">Database Centric</div><div class="evo-sub">Enterprise desktop, banyak user, 1 DB</div></div>
+      <div class="evo-item"><div class="evo-title">Server Centric</div><div class="evo-sub">Rich Internet Client, web application</div></div>
+      <div class="evo-item current"><div class="evo-title">Web Centric</div><div class="evo-sub">Web GIS, Web Map, multi-device</div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--text-muted);margin-top:.4rem">
+      <span>← System of Record (penyimpanan)</span>
+      <span>System of Engagement (kolaboratif) →</span>
+    </div>
+    <p style="font-size:.83rem;color:var(--gray);line-height:1.6;margin-top:.75rem">
+      Pola arsitektur GIS telah berevolusi dari sistem berbasis file desktop yang berdiri sendiri (pengguna tunggal) menjadi sistem pengikatan Web GIS yang lebih kolaboratif — dapat diakses dari berbagai perangkat dan oleh banyak pengguna secara bersamaan.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔬</span> Software Data Models & Customization</div>
+    <div class="grid2">
+      <div class="hbox hbox-blue">
+        <strong>Software Data Models</strong><br>
+        Bagaimana model dunia nyata direpresentasikan dan dioperasikan dalam perangkat lunak SIG. Contoh: geodatabase model (Esri), shapefile model, coverage model.
+      </div>
+      <div class="hbox hbox-purple">
+        <strong>Customization</strong><br>
+        Proses memodifikasi perangkat lunak SIG untuk membuat aplikasi tertentu. Contoh: Python scripting di ArcGIS, plugin QGIS, custom tools di ArcToolbox.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🌐</span> Arsitektur Web GIS Open Source</div>
+    <div class="tier-row">
+      <div class="tier-lbl" style="background:var(--amber-light);color:var(--amber);font-size:.75rem">Presentation Tier</div>
+      <div class="tier-desc"><strong>OpenLayers, p.mapper, QGIS WebClient, GeoExt, Ext JS, jQuery</strong> — antarmuka pengguna berbasis browser</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-lbl" style="background:var(--purple-light);color:var(--purple);font-size:.75rem">Application Tier</div>
+      <div class="tier-desc"><strong>Web Servers:</strong> Apache, Apache Tomcat &nbsp;|&nbsp; <strong>Map Servers:</strong> MapServer, GeoServer, QGIS Server, deegree</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-lbl" style="background:var(--green-light);color:var(--green);font-size:.75rem">Data Tier</div>
+      <div class="tier-desc"><strong>PostGIS</strong> (PostgreSQL + spatial extension) + file .shp, .tif, .gpkg, .jpeg</div>
+    </div>
+    <div class="hbox hbox-green" style="margin-top:.5rem">
+      <strong>Stack lengkap:</strong> PostGIS → GeoServer → GeoWebCache (tile caching) → GeoExt & OpenLayers (browser client)<br>
+      <strong>GeoNode</strong> = platform open source lengkap yang menggabungkan GeoServer + GeoWebCache + Django + PostGIS + OpenLayers
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> Tipe Software GIS (Longley, 2005)</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <tr><th>Kategori</th><th>Autodesk</th><th>ESRI</th><th>Intergraph</th><th>MapInfo</th></tr>
+      <tr><td><strong>Internet</strong></td><td>MapGuide</td><td>ArcIMS</td><td>GeoMedia Web Map, Enterprise</td><td>MapXtreme, MapXSite</td></tr>
+      <tr><td><strong>Viewer</strong></td><td>AutoCAD LT</td><td>ArcExplorer</td><td>GeoMedia Viewer</td><td>ProViewer</td></tr>
+      <tr><td><strong>Desktop</strong></td><td>World</td><td>ArcView</td><td>GeoMedia</td><td>MapInfo Professional</td></tr>
+      <tr><td><strong>Professional</strong></td><td>AutoCAD/World</td><td>ArcInfo</td><td>GeoMedia Pro</td><td>MapInfo Professional</td></tr>
+      <tr><td><strong>Database Server</strong></td><td>Vision</td><td>ArcSDE</td><td>Uses Oracle Spatial</td><td>SpatialWare</td></tr>
+      <tr><td><strong>CAD</strong></td><td>AutoCAD MAP</td><td>ArcCAD</td><td>Featured in products</td><td>Featured in products</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 5: ENTERPRISE GIS
+========================================== -->
+<div id="enterprise" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🌐 Enterprise GIS</div>
+    <div class="sec-sub">GIS skala organisasi besar — ArcGIS Enterprise, Cloud & Deployment</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏢</span> Komponen ArcGIS Enterprise</div>
+    <p style="font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:.75rem">
+      ArcGIS Enterprise = ArcGIS Web Adaptor + Portal for ArcGIS + ArcGIS Server + ArcGIS Data Store
+    </p>
+    <div class="grid2">
+      <div class="cmp-card">
+        <div class="cmp-head">🔗 ArcGIS Web Adaptor</div>
+        <p style="font-size:.82rem;color:var(--gray)">Gateway/reverse proxy antara web server dan ArcGIS. Mengatur akses dari luar jaringan organisasi, mengelola URL dan keamanan.</p>
+      </div>
+      <div class="cmp-card">
+        <div class="cmp-head">🌐 Portal for ArcGIS</div>
+        <span class="badge badge-blue">Presentation Tier</span>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:.4rem">Antarmuka pengguna untuk mengakses, berbagi, dan mengelola konten GIS. Setara dengan ArcGIS Online tetapi di-install on-premises.</p>
+      </div>
+      <div class="cmp-card">
+        <div class="cmp-head">⚙️ ArcGIS Server</div>
+        <span class="badge badge-purple">Business Logic Tier</span>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:.4rem">Menjalankan geoprocessing, menyajikan feature service, map service, image service. Hosting server untuk data.</p>
+      </div>
+      <div class="cmp-card">
+        <div class="cmp-head">🗄️ ArcGIS Data Store</div>
+        <span class="badge badge-green">Data Tier</span>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:.4rem">Menyimpan data relasional dan tile cache. Terhubung ke hosted services di ArcGIS Server. Relational + tile cache store.</p>
+      </div>
+    </div>
+    <div class="hbox hbox-blue" style="margin-top:.75rem">
+      <strong>Logical Architecture Base Deployment:</strong> ArcGIS Web Adaptor → Portal for ArcGIS (App tier) → ArcGIS Web Adaptor → ArcGIS Server (Server tier) → ArcGIS Data Store (Data tier)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">☁️</span> Strategi Deployment ArcGIS Platform</div>
+    <div class="grid2">
+      <div style="padding:1rem;background:var(--blue-light);border-radius:var(--radius-lg);border:1px solid #93c5fd">
+        <div style="font-size:.95rem;font-weight:700;color:var(--blue-dark);margin-bottom:.5rem">☁️ SaaS (Cloud)</div>
+        <div style="font-size:.82rem;color:var(--blue-dark)">
+          • ArcGIS Online Organization<br>
+          • Hosted services online<br>
+          • Online basemaps and services<br>
+          <span style="opacity:.7">Public Network, mudah akses</span>
+        </div>
+      </div>
+      <div style="padding:1rem;background:var(--gray-light);border-radius:var(--radius-lg);border:1px solid var(--border-dark)">
+        <div style="font-size:.95rem;font-weight:700;color:var(--gray);margin-bottom:.5rem">🖥️ Software (On-Premises)</div>
+        <div style="font-size:.82rem;color:var(--gray)">
+          • Portal for ArcGIS<br>
+          • ArcGIS for Server<br>
+          • Data Appliance for ArcGIS<br>
+          <span style="opacity:.7">Di balik Firewall, data lebih aman</span>
+        </div>
+      </div>
+    </div>
+    <div class="hbox hbox-amber" style="margin-top:.75rem">
+      💡 Strategi <strong>Hybrid</strong> (kombinasi cloud + on-premises) paling umum dipakai instansi pemerintah — data sensitif on-premises, layanan publik via cloud untuk akses lebih luas.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🖥️</span> Arsitektur ArcGIS Desktop</div>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem">Workstation Client</p>
+        <ul class="tree-list">
+          <li><strong>File data source</strong> → ArcGIS Desktop langsung baca file (shp, gdb) — Read/Edit</li>
+          <li><strong>Direct connect (SDE DBMS)</strong> → Multi-user versioned editing, Enterprise Geodatabase</li>
+          <li><strong>DBMS connect</strong> → Read-only, Supported database</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:600;margin-bottom:.4rem">Web GIS Architecture (Remote Client)</p>
+        <ul class="tree-list">
+          <li><strong>ArcGIS Feature Service</strong> → ArcGIS Desktop baca/edit via ArcGIS Server</li>
+          <li>Single versioned editing via DBMS</li>
+          <li>Supported database / Enterprise Geodatabase</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">☁️</span> Cloud Computing Service untuk GIS</div>
+    <div class="grid4">
+      <div style="text-align:center;padding:.75rem;border:1px solid var(--border);border-radius:var(--radius)">
+        <div style="font-size:1.5rem;margin-bottom:.3rem">🟠</div>
+        <div style="font-weight:700;font-size:.85rem">AWS</div>
+        <div style="font-size:.73rem;color:var(--text-muted)">aws.amazon.com</div>
+      </div>
+      <div style="text-align:center;padding:.75rem;border:1px solid var(--border);border-radius:var(--radius)">
+        <div style="font-size:1.5rem;margin-bottom:.3rem">🔵</div>
+        <div style="font-weight:700;font-size:.85rem">Microsoft Azure</div>
+        <div style="font-size:.73rem;color:var(--text-muted)">azure.microsoft.com</div>
+      </div>
+      <div style="text-align:center;padding:.75rem;border:1px solid var(--border);border-radius:var(--radius)">
+        <div style="font-size:1.5rem;margin-bottom:.3rem">🔴</div>
+        <div style="font-weight:700;font-size:.85rem">Alibaba Cloud</div>
+        <div style="font-size:.73rem;color:var(--text-muted)">id.alibabacloud.com</div>
+      </div>
+      <div style="text-align:center;padding:.75rem;border:1px solid var(--border);border-radius:var(--radius)">
+        <div style="font-size:1.5rem;margin-bottom:.3rem">🟡</div>
+        <div style="font-weight:700;font-size:.85rem">Google Cloud</div>
+        <div style="font-size:.73rem;color:var(--text-muted)">cloud.google.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 6: MANAJEMEN PROYEK
+========================================== -->
+<div id="manajemen" class="section">
+  <div class="sec-header">
+    <div class="sec-title">📋 Manajemen Proyek GIS</div>
+    <div class="sec-sub">Kerangka PMBOK — 10 Knowledge Areas & Siklus Proyek GIS</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗂️</span> 10 Knowledge Areas (PMBOK)</div>
+    <p style="font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:.75rem">
+      Semua knowledge area diintegrasikan melalui <strong>Project Integration Management</strong> sebagai sumbu utama yang menghubungkan semua elemen proyek menuju keberhasilan. Kombinasi proyek-proyek yang berhasil membentuk <strong>Project Portfolio</strong> → <strong>Enterprise Success</strong>.
+    </p>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.83rem;font-weight:700;margin-bottom:.4rem">Knowledge Areas (Upper)</p>
+        <div class="hbox hbox-blue" style="margin-bottom:.4rem"><strong>📐 Scope Management</strong> — menentukan batasan proyek, deliverable, WBS</div>
+        <div class="hbox hbox-blue" style="margin-bottom:.4rem"><strong>⏱️ Time Management</strong> — jadwal, milestone, Gantt chart</div>
+        <div class="hbox hbox-blue" style="margin-bottom:.4rem"><strong>💰 Cost Management</strong> — anggaran, estimasi biaya software/hardware GIS</div>
+        <div class="hbox hbox-blue"><strong>✅ Quality Management</strong> — standar data SNI geospasial BIG, akurasi peta</div>
+      </div>
+      <div>
+        <p style="font-size:.83rem;font-weight:700;margin-bottom:.4rem">Knowledge Areas (Lower)</p>
+        <div class="hbox hbox-purple" style="margin-bottom:.4rem"><strong>👥 Human Resource Management</strong> — GIS analyst, surveyor, DB admin, web developer</div>
+        <div class="hbox hbox-purple" style="margin-bottom:.4rem"><strong>📢 Communications Management</strong> — laporan progres, koordinasi stakeholder</div>
+        <div class="hbox hbox-purple" style="margin-bottom:.4rem"><strong>⚠️ Risk Management</strong> — risiko data tidak tersedia, anggaran terpotong, resistensi pengguna</div>
+        <div class="hbox hbox-purple" style="margin-bottom:.4rem"><strong>🛒 Procurement Management</strong> — pengadaan lisensi ArcGIS, hardware GPS, server</div>
+        <div class="hbox hbox-purple"><strong>🤝 Stakeholder Management</strong> — instansi pemerintah, masyarakat, vendor GIS</div>
+      </div>
+    </div>
+    <div class="hbox hbox-amber" style="margin-top:.75rem">
+      <strong>⚙️ Project Integration Management</strong> = panah horizontal utama yang mengintegrasikan semua knowledge area dari input stakeholder hingga keberhasilan proyek. Ini yang "mengikat" semuanya.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏗️</span> Contoh Rancangan Proyek Enterprise GIS Pemerintah Daerah</div>
+    <p style="font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:.75rem">Skenario: Pemda ingin membangun Sistem Informasi Geospasial Terpadu untuk tata ruang kota</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Scope:</strong> Fitur — peta tata ruang, izin bangunan, monitoring lahan, dashboard publik</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Time:</strong> Kebutuhan sistem (2 bln) → pembangunan (6 bln) → uji coba (2 bln) → go live</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Cost:</strong> Lisensi software, infrastruktur server/cloud, SDM GIS, pelatihan pengguna</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Quality:</strong> Standar data mengacu SNI geospasial BIG, akurasi peta sesuai skala</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Arsitektur sistem:</strong> PostGIS (data) → GeoServer (application) → WebGIS OpenLayers (presentation) + hybrid cloud</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 7: APLIKASI TIG
+========================================== -->
+<div id="aplikasi" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🗺️ Aplikasi Teknologi Informasi Geospasial</div>
+    <div class="sec-sub">Penerapan GIT di berbagai bidang kehidupan nyata</div>
+  </div>
+
+  <!-- Ringkasan Materi -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> Ringkasan Materi Kuliah</div>
+    <div class="hbox hbox-blue" style="margin-bottom:.75rem">
+      Mata kuliah <strong>Geospatial Information Technology (GEKP222254)</strong> — Dr. Sandy Budi Wibowo, GIS Laboratory, Dept. of GIScience, Fak. Geografi UGM. Tujuan: mahasiswa mampu mengidentifikasi tren GIT untuk Industri 4.0, menggunakan GIT dalam Geographic Information Science, dan merencanakan proyek GIT untuk geografi.
+    </div>
+    <div class="grid3" style="gap:.6rem;margin-bottom:.75rem">
+      <div style="background:var(--blue-light);border-radius:var(--radius);padding:.75rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--blue-dark)">6</div>
+        <div style="font-size:.75rem;color:var(--blue-dark)">Topik Inti</div>
+      </div>
+      <div style="background:var(--green-light);border-radius:var(--radius);padding:.75rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--green)">139</div>
+        <div style="font-size:.75rem;color:var(--green)">Slide Materi</div>
+      </div>
+      <div style="background:var(--purple-light);border-radius:var(--radius);padding:.75rem;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--purple)">CLO 3</div>
+        <div style="font-size:.75rem;color:var(--purple)">Plan Project GIT</div>
+      </div>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Topik</th><th>Poin Kunci</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sistem Operasi</strong></td><td>OS = fondasi software GIS. Windows dominan di GIS desktop (ArcGIS); Linux digunakan untuk server GIS (GeoServer, QGIS Server). Layer: Hardware → OS → System Software → App (GIS).</td></tr>
+        <tr><td><strong>GIS Software</strong></td><td>Aplikasi untuk menangkap, menyimpan, menganalisis, mengelola, dan memvisualisasikan data spasial. Berjalan di atas OS dan berkomunikasi dengan hardware melalui OS.</td></tr>
+        <tr><td><strong>GIS Hardware</strong></td><td>GNSS/GPS (Handheld, Geodetik RTK/PPK, Smartphone); UAV/Drone (RGB, Multispektral, LiDAR); Terrestrial LiDAR; GPR (Ground Penetrating Radar); IoT Sensor.</td></tr>
+        <tr><td><strong>GNSS & Pemosisian</strong></td><td>Sistem berbasis satelit yang menyediakan Position, Velocity, Time (PVT). Digunakan untuk integrasi GIS lapangan, mobile mapping, ground truthing, dan korelasi data.</td></tr>
+        <tr><td><strong>Arsitektur SIG</strong></td><td>Web Server (NGINX, Apache), Database Server, GIS Server. Klien mengakses via HTTP/HTTPS. Jaringan: Internet, Intranet, LAN/WAN.</td></tr>
+        <tr><td><strong>IoT & Sensor</strong></td><td>Perangkat fisik dengan sensor, konektivitas, dan identitas unik. Mengumpulkan data real-time untuk analisis spasial. Contoh: sensor cuaca, deformasi tanah, kualitas air.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Aplikasi bidang Bencana & Lingkungan -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌋</span> Kebencanaan & Lingkungan Hidup <span class="badge badge-red">High Priority</span></div>
+    <div class="hbox hbox-amber" style="margin-bottom:.75rem">
+      Indonesia sebagai negara "ring of fire" menjadikan aplikasi GIT untuk kebencanaan sangat kritis — gempa bumi, tsunami, letusan gunung api, tanah longsor, dan banjir.
+    </div>
+    <div class="grid2">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">🛰️ Pemantauan Deformasi Tanah</div>
+        <ul class="tree-list">
+          <li><strong>Teknologi:</strong> GNSS geodetik, InSAR (Sentinel-1), LiDAR UAV</li>
+          <li><strong>Contoh riset:</strong> Wibowo et al. (2021) — distribusi spatio-temporal deformasi tanah akibat Gempa Lombok 2018 menggunakan remote sensing</li>
+          <li><strong>Output:</strong> Peta deformasi, displacement vector, subsidence map</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">🌊 Pemetaan Risiko Bencana</div>
+        <ul class="tree-list">
+          <li><strong>Teknologi:</strong> GIS overlay analysis, UAV fotogrametri, GPR</li>
+          <li><strong>Aplikasi:</strong> Peta rawan banjir, zonasi tsunami, peta aliran lahar</li>
+          <li><strong>Real-time:</strong> Integrasi IoT sensor dengan WebGIS untuk Early Warning System</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="div">
+    <div class="grid2" style="margin-top:.5rem">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">🌿 Pemantauan Lingkungan</div>
+        <ul class="tree-list">
+          <li>Multispektral drone → NDVI, NDWI, analisis vegetasi</li>
+          <li>LiDAR airborne → pemetaan tutupan lahan dan kanopi hutan</li>
+          <li>GPR → deteksi lapisan geologi dan air tanah</li>
+          <li>IoT sensor → kualitas udara & air secara spasial</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">⛏️ Geologi & Pertambangan</div>
+        <ul class="tree-list">
+          <li>GPR → deteksi rongga, utilitas bawah tanah, arkeologi</li>
+          <li>Terrestrial LiDAR → pemodelan 3D tambang & terowongan</li>
+          <li>GNSS RTK/PPK → survei batas lahan presisi tinggi</li>
+          <li>UAV LiDAR → volume stockpile, topografi pit tambang</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pertanian & Kehutanan -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌾</span> Pertanian Presisi & Kehutanan</div>
+    <div class="grid2">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Precision Agriculture</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Akuisisi data:</strong> UAV multispektral (DJI Mavic 3M, Sentera) terbang di atas lahan</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Analisis:</strong> Indeks NDVI, NDWI, NDRE untuk mendeteksi kondisi tanaman & stres air</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Peta variabel:</strong> Zone management map untuk pemupukan dan irigasi presisi</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>IoT ground sensor:</strong> Sensor kelembaban tanah, suhu, curah hujan terintegrasi</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Inventarisasi Hutan</div>
+        <ul class="tree-list" style="margin-bottom:.75rem">
+          <li><strong>LiDAR UAV/Airborne:</strong> Estimasi biomassa, tinggi pohon, volume kayu</li>
+          <li><strong>Multispektral:</strong> Deteksi deforestasi, kesehatan hutan, kebakaran</li>
+          <li><strong>GNSS:</strong> Ground truth titik sampel inventarisasi hutan</li>
+          <li><strong>WebGIS:</strong> Monitoring tutupan hutan nasional secara real-time</li>
+        </ul>
+        <div class="hbox hbox-green" style="font-size:.8rem">
+          💡 Contoh: Pemetaan potensi hutan mangrove menggunakan UAV multispektral dan LiDAR di wilayah pesisir Indonesia.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Infrastruktur & Perkotaan -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🏙️</span> Perencanaan Kota & Infrastruktur</div>
+    <div class="grid2">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Smart City & Urban Planning</div>
+        <ul class="tree-list">
+          <li><strong>Terrestrial LiDAR:</strong> Pemodelan 3D gedung dan infrastruktur kota (BIM-GIS integration)</li>
+          <li><strong>UAV fotogrametri:</strong> Ortofoto dan DSM/DTM kota beresolusi tinggi</li>
+          <li><strong>WebGIS:</strong> Sistem informasi tata ruang berbasis web (RDTR Online)</li>
+          <li><strong>IoT + GIS:</strong> Smart traffic, smart parking, smart waste management</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Jaringan Utilitas & Infrastruktur</div>
+        <ul class="tree-list">
+          <li><strong>GPR:</strong> Deteksi pipa air, kabel listrik, jaringan bawah tanah tanpa penggalian</li>
+          <li><strong>GNSS RTK:</strong> Stakeout posisi fondasi, batas kavling, dan as jalan</li>
+          <li><strong>LiDAR TLS:</strong> Inspeksi jembatan, terowongan, dan tower SUTET</li>
+          <li><strong>Enterprise GIS:</strong> Manajemen aset utilitas dan jaringan distribusi</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="div">
+    <div class="hbox hbox-blue" style="font-size:.83rem">
+      <strong>Contoh Proyek Nyata:</strong> Pembangunan IKN (Ibu Kota Nusantara) — menggunakan kombinasi GNSS geodetik, UAV LiDAR, dan Enterprise GIS untuk perencanaan tata ruang, pemantauan konstruksi, dan pengelolaan kawasan hutan.
+    </div>
+  </div>
+
+  <!-- Transportasi & Navigasi -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🚗</span> Transportasi & Navigasi</div>
+    <div class="grid2">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Sistem Navigasi & Routing</div>
+        <div class="hbox hbox-blue" style="font-size:.82rem;margin-bottom:.5rem">
+          GNSS untuk Data Retrieval & Analysis → Decision making, optimal transportation route (dari materi kuliah)
+        </div>
+        <ul class="tree-list">
+          <li>GPS/GNSS receiver di kendaraan + WebGIS = navigasi real-time</li>
+          <li>LiDAR mobile mapping untuk pembaruan peta jalan (HD Map)</li>
+          <li>IoT sensor jalan → kondisi permukaan, kepadatan lalu lintas</li>
+          <li>Enterprise GIS → manajemen armada angkutan umum</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Survei Jalan & Cadastral</div>
+        <ul class="tree-list">
+          <li><strong>GNSS Geodetik RTK/PPK:</strong> Survei as jalan, batas administrasi, kadaster</li>
+          <li><strong>Mobile LiDAR:</strong> Inventarisasi kondisi jalan, rambu, dan aset tepi jalan</li>
+          <li><strong>UAV fotogrametri:</strong> Pemetaan koridor jalan baru dan pemantauan konstruksi</li>
+          <li><strong>GNSS Ground Truthing:</strong> Validasi data peta navigasi existing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kelautan & Pesisir -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌊</span> Kelautan, Pesisir & Hidrologi</div>
+    <div class="grid2">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Pemantauan Pesisir</div>
+        <ul class="tree-list">
+          <li><strong>UAV RGB + multispektral:</strong> Pemetaan terumbu karang, mangrove, abrasi pantai</li>
+          <li><strong>LiDAR bathymetric:</strong> Pemetaan kedalaman perairan dangkal</li>
+          <li><strong>GNSS geodetik:</strong> Pemantauan perubahan garis pantai dan land subsidence</li>
+          <li><strong>InSAR + GNSS:</strong> Deteksi penurunan muka tanah di kota-kota pesisir</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Pengelolaan DAS & Air</div>
+        <ul class="tree-list">
+          <li><strong>LiDAR DEM:</strong> Analisis DAS, flow direction, watershed delineation</li>
+          <li><strong>GPR:</strong> Deteksi akuifer dan muka air tanah</li>
+          <li><strong>IoT sensor hidrologi:</strong> Debit sungai, muka air waduk secara real-time</li>
+          <li><strong>WebGIS:</strong> Monitoring banjir dan sistem peringatan dini berbasis lokasi</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kesehatan & Sosial -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🏥</span> Kesehatan Masyarakat & Sosial Ekonomi</div>
+    <div class="grid2">
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Health GIS (Epidemiologi Spasial)</div>
+        <ul class="tree-list">
+          <li>Pemetaan persebaran penyakit (demam berdarah, malaria, COVID-19)</li>
+          <li>Analisis hotspot klaster penyakit dengan kernel density estimation</li>
+          <li>Aksesibilitas fasilitas kesehatan — analisis jangkauan dan gap layanan</li>
+          <li>WebGIS dashboard untuk pemantauan kasus oleh Dinkes/Kemenkes</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:.88rem;margin-bottom:.5rem;color:var(--text)">Sosial Ekonomi & Perencanaan</div>
+        <ul class="tree-list">
+          <li>Pemetaan kemiskinan spasial dan zonasi wilayah tertinggal</li>
+          <li>Analisis jaringan fasilitas pendidikan dan keterjangkauan sekolah</li>
+          <li>GIS untuk Sensus Penduduk — integrasi data statistik dan spasial</li>
+          <li>Enterprise WebGIS untuk SIPD (Sistem Informasi Pemerintah Daerah)</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="div">
+    <div class="hbox hbox-purple" style="font-size:.83rem">
+      <strong>Catatan IoT untuk Sosial:</strong> Dalam mata kuliah ini, IoT dijelaskan sebagai objek fisik dengan sensor yang menjadi "things" ketika mendapatkan: sensors, processing, dan connectivity. Aplikasinya termasuk smart meter energi, sensor kualitas udara, hingga kamera pemantau lalu lintas yang semua datanya dapat diintegrasikan ke platform GIS.
+    </div>
+  </div>
+
+  <!-- Tabel Ringkasan Teknologi vs Aplikasi -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Matriks Teknologi × Bidang Aplikasi</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Teknologi GIT</th>
+          <th>Bencana</th>
+          <th>Pertanian</th>
+          <th>Kota</th>
+          <th>Transportasi</th>
+          <th>Kelautan</th>
+          <th>Kesehatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>GNSS RTK/PPK</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+        <tr><td><strong>UAV RGB</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+        <tr><td><strong>UAV Multispektral</strong></td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+        <tr><td><strong>UAV LiDAR</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+        <tr><td><strong>Terrestrial LiDAR</strong></td><td>—</td><td>—</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>GPR</strong></td><td>✅</td><td>—</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+        <tr><td><strong>WebGIS / Enterprise</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+        <tr><td><strong>IoT Sensor</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- =========================================
+     SECTION 8: QUIZ
+========================================== -->
+<div id="quiz" class="section">
+  <div class="sec-header">
+    <div class="sec-title">✅ Latihan Soal Pilihan Ganda — 20 Soal HOTS</div>
+    <div class="sec-sub">Kerjakan semua soal untuk memaksimalkan persiapan UAS</div>
+  </div>
+  <div id="quiz-wrap"></div>
+</div>
+<!-- =========================================
+     SECTION 9: ESSAY HOTS
+========================================== -->
+<div id="essay" class="section">
+  <div class="sec-header">
+    <div class="sec-title">📝 Latihan Soal Essay HOTS — 8 Soal Kemungkinan Keluar UAS</div>
+    <div class="sec-sub">Klik "Lihat Jawaban" untuk membuka kunci jawaban lengkap. Pelajari poin-poin kunci sebelum ujian.</div>
+  </div>
+
+  <div class="hbox hbox-red" style="margin-bottom:1rem;font-size:.85rem">
+    🎯 <strong>Tips UAS:</strong> Soal essay cenderung menguji kemampuan analisis (bukan hafalan). Gunakan struktur: <strong>Definisi → Penjelasan → Contoh nyata → Kesimpulan/Implikasi.</strong> Nilai penuh biasanya diberikan jika menjawab semua poin kunci.
+  </div>
+
+  <!-- Soal 1 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">1</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-blue">Sistem Operasi & GIS</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Jelaskan bagaimana Operating System (OS) berperan sebagai fondasi bagi GIS Software. Mengapa pilihan OS berpengaruh terhadap kinerja aplikasi GIS? Berikan contoh konkret dengan minimal 2 OS berbeda!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~25 poin)</h4>
+      <p><strong>Definisi & Peran OS:</strong> OS adalah perangkat lunak fundamental yang mengelola seluruh hardware dan software pada komputer/perangkat. GIS Software merupakan <em>application layer</em> yang berjalan <strong>di atas</strong> OS dan berkomunikasi dengan hardware melalui OS. Lapisan arsitektur: User Input → OS → Application Layer (GIS) → System Software (drivers) → Hardware Layer (CPU, GPU, Storage).</p>
+      <p><strong>Pengaruh terhadap kinerja GIS:</strong></p>
+      <ul>
+        <li><strong>Kompatibilitas software:</strong> ArcGIS Desktop/Pro hanya berjalan di Windows; QGIS, GeoServer, PostGIS optimal di Linux</li>
+        <li><strong>Manajemen memori & CPU:</strong> Linux lebih efisien untuk proses server GIS 24/7 (lebih sedikit overhead)</li>
+        <li><strong>Driver hardware:</strong> GPU untuk 3D rendering GIS (seperti ArcGIS Pro 3D Scene) memerlukan driver spesifik per OS</li>
+        <li><strong>Stabilitas server:</strong> Linux server (Ubuntu, CentOS) digunakan untuk GeoServer karena jarang restart, uptime tinggi</li>
+      </ul>
+      <p><strong>Contoh Konkret:</strong></p>
+      <ul>
+        <li><strong>Windows 10/11:</strong> Digunakan untuk ArcGIS Pro di workstation GIS analyst — mendukung GUI, ESRI toolboxes, dan integrasi dengan Microsoft Office</li>
+        <li><strong>Linux Ubuntu Server:</strong> Digunakan untuk deploy GeoServer + PostGIS di server instansi pemerintah — stabil, gratis, efisien resource</li>
+        <li><strong>Android/iOS:</strong> Digunakan untuk aplikasi GIS mobile (ArcGIS Field Maps, Survey123) untuk pengambilan data lapangan menggunakan GPS smartphone</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Bonus:</strong> Sebutkan bahwa Linux distributions untuk GIS berbeda tujuan — Ubuntu/Debian untuk general purpose (QGIS, GeoServer), Red Hat Enterprise untuk enterprise server GIS, Raspberry Pi OS untuk IoT GIS sensor node.</div>
+    </div>
+  </div>
+
+  <!-- Soal 2 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">2</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-green">GNSS & Pemosisian</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Bandingkan metode penentuan posisi GNSS: Absolute Positioning (SPP), DGPS, dan RTK. Jelaskan perbedaan prinsip kerja, tingkat akurasi, dan berikan contoh penggunaan masing-masing dalam konteks pekerjaan geospasial!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~30 poin)</h4>
+      <p><strong>1. Absolute Positioning / SPP (Standard Point Positioning)</strong></p>
+      <ul>
+        <li><strong>Prinsip:</strong> Menggunakan pseudorange (jarak dari travel time sinyal) dari minimal 4 satelit. Satu receiver, tidak memerlukan base station.</li>
+        <li><strong>Akurasi:</strong> 3–10 meter (dipengaruhi ionosfer, troposfer, multipath)</li>
+        <li><strong>Contoh penggunaan:</strong> Navigasi kendaraan sehari-hari (Google Maps), tracking armada, geo-tagging foto dengan smartphone</li>
+      </ul>
+      <p><strong>2. DGPS (Differential GPS)</strong></p>
+      <ul>
+        <li><strong>Prinsip:</strong> Base station di titik terketahui menghitung koreksi kesalahan → koreksi dikirim ke rover via radio atau internet (NTRIP). Rover menerapkan koreksi ke pengukurannya.</li>
+        <li><strong>Akurasi:</strong> 0.5–3 meter (sub-meter dengan SBAS seperti WAAS/EGNOS)</li>
+        <li><strong>Contoh penggunaan:</strong> Pemetaan sumber daya alam, inventarisasi aset infrastruktur, survei hidrografi skala kecil</li>
+      </ul>
+      <p><strong>3. RTK (Real-Time Kinematic)</strong></p>
+      <ul>
+        <li><strong>Prinsip:</strong> Menggunakan <em>carrier phase measurement</em> (mengukur fase gelombang pembawa L1 ~19 cm). Base station mengirim koreksi fase real-time ke rover. Integer ambiguity resolution menghasilkan akurasi cm.</li>
+        <li><strong>Akurasi:</strong> 1–3 cm horizontal, 3–5 cm vertikal (tergantung kondisi)</li>
+        <li><strong>Contoh penggunaan:</strong> Survei kadaster dan batas wilayah, stakeout konstruksi jalan, pemantauan deformasi tanah vulkanik, pengambilan GCP untuk kalibrasi drone</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Kritis:</strong> Sebutkan keterbatasan RTK — akurasi menurun jika jarak dari base station > 20 km, tidak bekerja dalam gedung/tunnel/vegetasi lebat. Solusinya: PPK (Post-Processing Kinematic) yang lebih fleksibel karena diproses di kantor.</div>
+    </div>
+  </div>
+
+  <!-- Soal 3 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">3</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-purple">GIS Hardware</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Dalam sebuah proyek pemetaan kawasan rawan bencana longsor di pegunungan, hardware GIS apa yang akan Anda pilih dan mengapa? Jelaskan peran masing-masing hardware dalam alur kerja pemetaan dari akuisisi data hingga analisis!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~30 poin)</h4>
+      <p><strong>Hardware yang dipilih dan alasan (jawab minimal 3):</strong></p>
+      <ul>
+        <li><strong>UAV LiDAR (DJI M350 + Zenmuse L2):</strong> Menghasilkan point cloud 3D resolusi tinggi → membuat DTM/DSM akurat untuk analisis kemiringan lereng, deteksi retakan tanah, dan identifikasi zona rawan longsor. LiDAR menembus kanopi vegetasi rapat di pegunungan (berbeda dengan fotogrametri).</li>
+        <li><strong>GNSS Geodetik RTK (Trimble R10, CHCNAV i50):</strong> Pengambilan Ground Control Points (GCP) untuk kalibrasi data LiDAR/drone → memastikan akurasi posisi absolut data. Juga untuk survei profil lereng dan pengukuran titik kontrol pemantauan deformasi.</li>
+        <li><strong>UAV RGB (DJI Phantom 4 RTK):</strong> Menghasilkan ortofoto dan DSM untuk interpretasi visual tutupan lahan, identifikasi bekas longsoran, dan overlay dengan data LiDAR.</li>
+        <li><strong>IoT Sensor (accelerometer, soil moisture sensor, rain gauge):</strong> Monitoring real-time parameter pemicu longsor — curah hujan kumulatif, kadar air tanah, dan getaran tanah. Data diintegrasikan ke WebGIS untuk early warning system.</li>
+        <li><strong>GPR (Ground Penetrating Radar):</strong> Deteksi bidang gelincir (slip surface) dan lapisan geologi bawah permukaan yang menjadi zona kerentanan longsor.</li>
+      </ul>
+      <p><strong>Alur kerja pemetaan:</strong></p>
+      <ul>
+        <li>Tahap 1 — Akuisisi: UAV LiDAR terbang di atas area + GNSS untuk GCP</li>
+        <li>Tahap 2 — Pengolahan: Point cloud → DTM/DSM → analisis slope, aspect, curvature</li>
+        <li>Tahap 3 — Overlay: Data geologi + tutupan lahan + curah hujan + hasil IoT</li>
+        <li>Tahap 4 — Analisis: Pembuatan peta risiko longsor dengan weighted overlay di GIS</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Bonus:</strong> Jelaskan mengapa LiDAR lebih unggul dari fotogrametri biasa untuk pegunungan berberhutan — kemampuan "bare earth" filtering pada point cloud untuk mendapatkan terrain sebenarnya di bawah pohon.</div>
+    </div>
+  </div>
+
+  <!-- Soal 4 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">4</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-teal">Arsitektur SIG</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Jelaskan evolusi arsitektur GIS dari "File-Based" hingga "Cloud-Based". Apa kelebihan dan kekurangan masing-masing tahap evolusi? Mengapa instansi pemerintah di Indonesia saat ini cenderung memilih arsitektur hybrid?</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~25 poin)</h4>
+      <p><strong>Tahap 1 — File-Based (System of Record):</strong></p>
+      <ul>
+        <li>Deskripsi: Data disimpan dalam file lokal (shapefile, CAD, raster). Satu komputer, satu pengguna.</li>
+        <li>Kelebihan: Sederhana, tidak butuh jaringan, mudah dikelola individual</li>
+        <li>Kekurangan: Tidak bisa kolaborasi, susah berbagi data, tidak ada version control</li>
+      </ul>
+      <p><strong>Tahap 2 — Database-Centric (System of Record):</strong></p>
+      <ul>
+        <li>Deskripsi: Data di RDBMS (ArcSDE/PostGIS). Beberapa pengguna akses database yang sama via LAN/intranet.</li>
+        <li>Kelebihan: Multi-user, data terpusat, ada version control (geodatabase versioning)</li>
+        <li>Kekurangan: Terbatas jaringan lokal, infrastruktur server mahal</li>
+      </ul>
+      <p><strong>Tahap 3 — Server-Centric (System of Engagement):</strong></p>
+      <ul>
+        <li>Deskripsi: ArcGIS Server / GeoServer menyajikan layanan spasial (WMS, WFS) via internet. Three-tier architecture.</li>
+        <li>Kelebihan: Dapat diakses banyak pengguna via browser, mendukung kolaborasi organisasi</li>
+        <li>Kekurangan: Infrastruktur server harus dikelola sendiri (biaya IT tinggi)</li>
+      </ul>
+      <p><strong>Tahap 4 — Cloud-Based (System of Engagement):</strong></p>
+      <ul>
+        <li>Deskripsi: ArcGIS Online, Google Earth Engine, AWS Location Service. Infrastructure dikelola vendor cloud.</li>
+        <li>Kelebihan: Scalable, tidak perlu infrastruktur sendiri, akses global, mudah update</li>
+        <li>Kekurangan: Data keluar dari server lokal (isu kedaulatan data), biaya subscription, ketergantungan internet</li>
+      </ul>
+      <p><strong>Mengapa Hybrid untuk Instansi Pemerintah Indonesia:</strong></p>
+      <ul>
+        <li>Data sensitif (kependudukan, batas wilayah classified) tetap on-premises → mematuhi UU ITE dan peraturan keamanan data</li>
+        <li>Layanan publik (peta tata ruang, informasi bencana) di cloud → aksesibilitas warga lebih mudah</li>
+        <li>Efisiensi biaya: tidak perlu upgrade infrastruktur untuk semua layanan</li>
+        <li>Contoh: BIG (Badan Informasi Geospasial) menggunakan server lokal untuk data dasar nasional + portal publik Ina-Geoportal di cloud</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Kritis:</strong> Hubungkan dengan konsep "System of Record" vs "System of Engagement" dari materi kuliah — evolusi dari menyimpan data menjadi berbagi dan berkolaborasi.</div>
+    </div>
+  </div>
+
+  <!-- Soal 5 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">5</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-blue">Enterprise GIS</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Jelaskan komponen-komponen utama ArcGIS Enterprise dan bagaimana hubungan antar komponen dalam arsitektur three-tier. Bandingkan dengan stack open source setara (PostGIS + GeoServer + GeoNode)!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~30 poin)</h4>
+      <p><strong>Komponen ArcGIS Enterprise dan perannya:</strong></p>
+      <ul>
+        <li><strong>ArcGIS Portal:</strong> Presentation/UI tier — antarmuka web untuk user mengakses peta, app, dashboard. Mengelola user, role, dan item (hosted layers, apps).</li>
+        <li><strong>ArcGIS Server:</strong> Business Logic/Application tier — menjalankan geoprocessing, menyajikan feature service, map service, image service. Inti "kecerdasan" GIS.</li>
+        <li><strong>ArcGIS Data Store:</strong> Data tier — menyimpan hosted feature layer data (Relational DS) dan tile cache (Tile Cache DS). Terhubung langsung ke ArcGIS Server.</li>
+        <li><strong>ArcGIS Web Adaptor:</strong> Gateway tier — reverse proxy yang menghubungkan Portal dan Server ke internet/intranet via HTTPS. Enkripsi dan routing.</li>
+      </ul>
+      <p><strong>Alur komunikasi three-tier:</strong></p>
+      <ul>
+        <li>User (browser) → Web Adaptor (HTTPS) → Portal (autentikasi & routing) → ArcGIS Server (proses analisis) → Data Store (ambil data) → kembali ke user</li>
+      </ul>
+      <p><strong>Perbandingan dengan Open Source Stack:</strong></p>
+      <ul>
+        <li><strong>PostGIS</strong> ↔ ArcGIS Data Store (Data tier — database spasial)</li>
+        <li><strong>GeoServer</strong> ↔ ArcGIS Server (Business Logic — map/feature server)</li>
+        <li><strong>GeoNode</strong> ↔ ArcGIS Portal (Presentation — portal manajemen konten web GIS)</li>
+        <li><strong>NGINX/Apache</strong> ↔ ArcGIS Web Adaptor (Gateway — reverse proxy)</li>
+      </ul>
+      <p><strong>Kelebihan masing-masing:</strong></p>
+      <ul>
+        <li>ArcGIS Enterprise: Dukungan vendor, integrasi seamless, support enterprise, cocok untuk instansi besar yang sudah pakai ekosistem ESRI</li>
+        <li>Open Source Stack: Gratis, fleksibel, komunitas besar, tidak vendor lock-in, cocok untuk proyek dengan anggaran terbatas atau akademik</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Bonus:</strong> Sebutkan bahwa GeoNode mengintegrasikan GeoServer + GeoWebCache + PostGIS + Django + OpenLayers dalam satu paket siap pakai — mempercepat deployment WebGIS komunitas/pemerintah daerah.</div>
+    </div>
+  </div>
+
+  <!-- Soal 6 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">6</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-red">IoT & Sensor</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Jelaskan konsep Internet of Things (IoT) dalam konteks Teknologi Informasi Geospasial. Bagaimana integrasi IoT dengan GIS dapat mendukung sistem pemantauan bencana alam secara real-time? Berikan contoh arsitektur sistemnya!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~30 poin)</h4>
+      <p><strong>Konsep IoT:</strong> IoT adalah ekosistem perangkat fisik (Things) yang terhubung ke jaringan dan mampu mengumpulkan serta mentransmisikan data. Sebuah objek fisik menjadi "thing" ketika mendapatkan: <strong>(1) Sensors</strong> (mengumpulkan data), <strong>(2) Processing</strong> (mengolah data), dan <strong>(3) Connectivity</strong> (mengirim data). Karakteristik Things: Physical existence, Identification (unique ID), Connectivity, Sensing, Communication, Intelligence.</p>
+      <p><strong>Integrasi IoT dengan GIS untuk Monitoring Bencana:</strong></p>
+      <ul>
+        <li><strong>Lokasi adalah kunci:</strong> Setiap sensor IoT memiliki koordinat geografis → data langsung dapat dipetakan sebagai layer dalam GIS</li>
+        <li><strong>Real-time streaming:</strong> Data sensor (debit sungai, curah hujan, kadar gas H₂S gunung berapi) dikirim ke server setiap beberapa menit → diupdate di WebGIS secara otomatis</li>
+        <li><strong>Threshold alerting:</strong> Ketika nilai sensor melampaui ambang batas → GIS memicu notifikasi berbasis lokasi ke warga di zona bahaya</li>
+        <li><strong>Temporal analysis:</strong> Riwayat data sensor disimpan di database spasiotemporal → analisis tren dan pola bahaya</li>
+      </ul>
+      <p><strong>Contoh Arsitektur Sistem Monitoring Banjir:</strong></p>
+      <ul>
+        <li>Layer 1 (Akuisisi): HOBO U20 water level sensor di sungai + AWS weather station + GNSS displacement sensor di tebing</li>
+        <li>Layer 2 (Transmisi): LoRaWAN/4G → MQTT broker (Node-RED) → server</li>
+        <li>Layer 3 (Storage): TimescaleDB + PostGIS (data spasiotemporal)</li>
+        <li>Layer 4 (Analisis & Visualisasi): GeoServer + Grafana dashboard + WebGIS Leaflet.js</li>
+        <li>Layer 5 (Aksi): Push notification ke warga + sirine otomatis di area bahaya</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Kritis — dari Riset Materi Kuliah:</strong> Wibowo et al. (2021) mengembangkan sistem pemantauan IoT berbasis GNSS untuk deformasi tanah akibat gempa (Surat Pencatatan Ciptaan — patented invention). Ini adalah contoh integrasi IoT+GNSS+GIS di Indonesia yang nyata.</div>
+    </div>
+  </div>
+
+  <!-- Soal 7 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">7</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-green">Manajemen Proyek GIS</span> <span class="badge badge-amber">⭐ Kemungkinan Keluar Tinggi</span></div>
+        <div class="essay-q-text">Anda ditugaskan memimpin proyek pembuatan WebGIS sistem informasi pertanahan kabupaten (6 bulan, anggaran 500 juta). Jelaskan bagaimana Anda menerapkan kerangka PMBOK dalam mengelola proyek ini! Sebutkan minimal 5 Knowledge Area yang relevan dan tantangan spesifik setiap areanya!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~35 poin)</h4>
+      <p><strong>PMBOK dalam Proyek WebGIS Pertanahan:</strong></p>
+      <ul>
+        <li><strong>1. Integration Management (Pusat/Hub):</strong> Membuat Project Charter yang mendefinisikan tujuan (WebGIS pertanahan kabupaten), sponsor, dan otoritas PM. Mengintegrasikan seluruh knowledge area agar berjalan kohesif. <em>Tantangan: Koordinasi antara tim GIS, tim IT server, dan dinas pertanahan.</em></li>
+        <li><strong>2. Scope Management:</strong> Mendefinisikan WBS (Work Breakdown Structure): (1) Pengumpulan data bidang tanah, (2) Setup server PostGIS+GeoServer, (3) Pengembangan WebGIS frontend, (4) Uji coba dan pelatihan user. <em>Tantangan: Scope creep — permintaan fitur baru di tengah proyek dari stakeholder.</em></li>
+        <li><strong>3. Schedule/Time Management:</strong> Membuat Gantt chart 6 bulan dengan milestone: M1=server ready, M3=data input selesai, M5=beta testing, M6=go-live. <em>Tantangan: Proses pengadaan GNSS RTK untuk survei lapangan sering lambat (LPSE).</em></li>
+        <li><strong>4. Cost Management:</strong> Alokasi 500 juta: hardware GIS (30%), lisensi software/OS (10%), jasa konsultan (25%), pelatihan (15%), server cloud (20%). <em>Tantangan: Fluktuasi harga hardware impor (GPS, drone) akibat nilai tukar.</em></li>
+        <li><strong>5. Risk Management:</strong> Risk Register: (1) Data bidang tanah tidak lengkap → mitigasi: pengadaan data BPN, (2) Server down saat demo → mitigasi: backup server, (3) Staf tidak kompeten GIS → mitigasi: pelatihan awal. <em>Tantangan: Risiko keamanan data pertanahan sensitif.</em></li>
+        <li><strong>6. Stakeholder Management:</strong> Identifikasi stakeholder: Kepala Dinas BPN, IT staff, warga (end-user), DPRD. Communication plan berbeda untuk setiap stakeholder. <em>Tantangan: Resistensi staf lama terhadap sistem baru.</em></li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Kritis:</strong> Jelaskan bahwa Project Integration Management adalah "perekat" di tengah yang memastikan 10 knowledge area bekerja sinergis. Tanpa integrasi yang baik, setiap area bisa berhasil sendiri-sendiri tapi proyek tetap gagal.</div>
+    </div>
+  </div>
+
+  <!-- Soal 8 -->
+  <div class="essay-card">
+    <div class="essay-q-row">
+      <span class="essay-num">8</span>
+      <div style="flex:1">
+        <div style="margin-bottom:.4rem"><span class="badge badge-purple">Integrasi & Tren GIT</span> <span class="badge badge-red">🔥 HOTS Terprediksi</span></div>
+        <div class="essay-q-text">Analisis bagaimana perkembangan Geospatial Information Technology (GIT) mendukung visi Indonesia dalam menghadapi era Industri 4.0. Jelaskan peran GNSS, UAV, LiDAR, IoT, dan Enterprise GIS dalam satu skenario proyek terintegrasi untuk pembangunan berkelanjutan di Indonesia!</div>
+      </div>
+      <button class="essay-toggle" onclick="toggleEssay(this)">Lihat Jawaban</button>
+    </div>
+    <div class="essay-answer">
+      <h4>🔑 Jawaban Kunci (Poin Penuh ~40 poin — Soal Integrasi)</h4>
+      <p><strong>GIT dan Industri 4.0:</strong> Industri 4.0 ditandai oleh konvergensi teknologi digital, fisik, dan biologis. Dalam GIT, hal ini terwujud melalui: (1) <em>Big Data Geospasial</em> dari sensor IoT dan satelit, (2) <em>Cloud GIS</em> untuk processing data masif, (3) <em>AI/ML</em> untuk analisis citra otomatis, (4) <em>Real-time spatial decision making</em>. CLO mata kuliah ini: mengidentifikasi tren GIT untuk Industri 4.0.</p>
+      <p><strong>Skenario Proyek Terintegrasi: Monitoring Kawasan Konservasi &amp; Pembangunan Berkelanjutan IKN Nusantara</strong></p>
+      <ul>
+        <li><strong>GNSS Geodetik (Geodetic GNSS):</strong> Pasang jaringan stasiun CORS (Continuously Operating Reference Station) di sekitar IKN → memantau penurunan/kenaikan tanah akibat konstruksi secara kontinu (mm/tahun), menyediakan referensi koordinat nasional untuk semua data geospasial proyek</li>
+        <li><strong>UAV LiDAR (DJI M350 + Zenmuse L2):</strong> Pemetaan tutupan hutan Kalimantan sebelum dan sesudah pembangunan → menghasilkan DTM/DSM untuk perencanaan drainase, analisis erosi, dan volume cut-fill konstruksi. Multispektral drone untuk NDVI monitoring kesehatan hutan buffer zone.</li>
+        <li><strong>Terrestrial LiDAR:</strong> Pemodelan 3D gedung pemerintahan dan infrastruktur kritis → integrasi BIM-GIS untuk manajemen fasilitas jangka panjang dan emergency planning</li>
+        <li><strong>IoT Sensor Network:</strong> Deploy ratusan sensor: curah hujan, debit sungai, kualitas udara, soil moisture, deformasi lereng → data streaming real-time ke platform cloud GIS → dashboard pemantauan lingkungan IKN secara live</li>
+        <li><strong>Enterprise GIS (ArcGIS Enterprise / GeoNode):</strong> Platform terpusat yang mengintegrasikan semua data di atas → 3D Scene untuk perencanaan visual kota → Dashboard publik transparansi pembangunan → API untuk integrasi dengan sistem SIPD (Sistem Informasi Pemerintah Daerah)</li>
+      </ul>
+      <p><strong>Output untuk Pembangunan Berkelanjutan:</strong></p>
+      <ul>
+        <li>Indikator SDGs berbasis spasial — memantau SDG 11 (Kota Berkelanjutan), SDG 15 (Ekosistem Darat) secara terukur</li>
+        <li>Carbon stock monitoring hutan → mendukung komitmen NDC (Nationally Determined Contribution) Indonesia</li>
+        <li>Early warning system terpadu → melindungi warga dari risiko bencana di kawasan baru</li>
+      </ul>
+      <div class="key-point">💡 <strong>Poin Tertinggi:</strong> Hubungkan dengan CLO mata kuliah — kemampuan merencanakan proyek GIT untuk Geography (CLO 3). Jawaban yang menunjukkan pemahaman bagaimana semua teknologi bekerja bersama dalam sistem yang kohesif, bukan sendiri-sendiri, akan mendapat nilai tertinggi.</div>
+    </div>
+  </div>
+
+</div><!-- end essay section -->
+
+</div><!-- end main -->
+
+<script>
+function showSec(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'quiz') initQuiz();
+  if (id === 'essay') {}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleEssay(btn) {
+  const answer = btn.closest('.essay-card').querySelector('.essay-answer');
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open');
+  btn.textContent = isOpen ? 'Lihat Jawaban' : 'Sembunyikan';
+}
+
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+// ============ QUIZ ENGINE ============
+const questions = [
+  {cat:'Sistem Operasi', q:'Dalam konteks arsitektur GIS three-tier, pada layer mana Linux paling sering digunakan dan mengapa?', opts:['Presentation tier, karena tampilannya lebih menarik','Business Logic tier, karena mendukung ArcGIS Server','Data Server tier, karena stabilitas dan efisiensi resource untuk server 24/7','Network tier, karena kecepatannya'], ans:2, exp:'Linux paling dominan di Data Server tier (database seperti PostGIS, Oracle Spatial) karena stabilitasnya untuk operasi server 24/7, efisiensi penggunaan RAM/CPU, dan lisensinya gratis. Windows lebih umum di tier client/presentation.'},
+  {cat:'Sistem Operasi', q:'Seorang GIS developer ingin deploy GeoServer + PostGIS di cloud VM dengan anggaran terbatas. OS apa yang paling tepat?', opts:['Windows Server 2022, karena paling populer','macOS Server, karena ringan','Linux Ubuntu Server, karena gratis, stabil, dan ringan untuk server GIS','Windows 11 Pro, karena mendukung ArcGIS'], ans:2, exp:'Linux Ubuntu Server adalah pilihan terbaik karena: (1) gratis/open source, (2) ringan dan efisien untuk cloud VM, (3) GeoServer dan PostGIS berjalan optimal di Linux, (4) komunitas dan dokumentasi besar. Windows Server jauh lebih mahal lisensinya.'},
+  {cat:'Sistem Operasi', q:'Alur kerja OS dari input hingga hardware secara berurutan adalah...', opts:['User Input → Hardware → OS → Application → System Software','User Input → OS → Application Layer → System Software → Hardware','User Input → Application → OS → Hardware → System Software','Hardware → OS → User Input → Application → System Software'], ans:1, exp:'Alur yang benar: User Input → OS → Application Layer (ArcGIS, QGIS) → System Software (drivers, utilities) → Hardware Layer (CPU, memory, storage, GPU, I/O). OS adalah penghubung utama antara input pengguna dan hardware.'},
+  {cat:'GNSS & Pemosisian', q:'Mengapa metode RTK lebih akurat dibandingkan posisi absolut (SPP)?', opts:['RTK menggunakan lebih banyak satelit','RTK menggunakan pengukuran fase gelombang carrier (carrier phase) bukan hanya pseudorange','RTK tidak memerlukan satelit dan menggunakan sinyal radio lokal','RTK menggunakan datum yang lebih baru dari WGS-84'], ans:1, exp:'RTK menggunakan pengukuran fase gelombang carrier (carrier phase) yang panjangnya ~19 cm untuk L1. Fraksi fase sangat presisi → akurasi cm-level (1-3 cm). SPP hanya menggunakan pseudorange (jarak dari travel time sinyal) yang akurasinya hanya meter-level (3-10 m) karena masih terpengaruh berbagai kesalahan.'},
+  {cat:'GNSS & Pemosisian', q:'Sebuah tim survei menggunakan DGPS untuk pemetaan batas desa. Akurasi pengukuran mulai menurun signifikan. Kemungkinan penyebabnya adalah...', opts:['Cuaca cerah mengganggu sinyal satelit','Jarak rover dari base station terlalu jauh (> 20 km)','Menggunakan datum WGS-84 yang kurang akurat','Rover bergerak terlalu cepat'], ans:1, exp:'Keterbatasan utama DGPS/RTK adalah akurasi berkurang seiring bertambahnya jarak dari base station. Koreksi yang dikirim base station kurang relevan untuk posisi yang jauh karena kondisi atmosfer, troposfer, dan ionosfer berbeda. Jarak ideal untuk RTK < 10-20 km.'},
+  {cat:'GNSS & Pemosisian', q:'Apa perbedaan mendasar antara GBAS dan SBAS dalam sistem augmentasi GPS?', opts:['GBAS menggunakan satelit, SBAS menggunakan stasiun darat','GBAS berbasis stasiun darat, SBAS berbasis satelit — keduanya memberikan koreksi ke penerima','GBAS hanya untuk militer, SBAS untuk sipil','GBAS lebih akurat dari SBAS'], ans:1, exp:'GBAS (Ground-based Augmentation System) menggunakan jaringan stasiun darat untuk memberikan koreksi diferensial. SBAS (Satellite-based Augmentation System) menggunakan satelit geostasioner tambahan (seperti WAAS, EGNOS, GAGAN) yang menyiarkan koreksi dari orbit. Keduanya meningkatkan akurasi posisi GPS.'},
+  {cat:'GNSS & Pemosisian', q:'Untuk memantau deformasi tanah (ground deformation) akibat aktivitas vulkanik dengan presisi tertinggi, kombinasi sensor yang paling tepat adalah...', opts:['Smartphone GPS + kamera drone RGB','Geodetic GNSS Static + Radar SAR (InSAR)','DGPS handheld + Total Station','Handheld GPS Garmin + optical satellite'], ans:1, exp:'Geodetic GNSS Static memberikan akurasi mm untuk mengukur pergerakan titik kontrol. Radar SAR (InSAR — Interferometric SAR) dari satelit seperti Sentinel-1 mendeteksi deformasi permukaan dalam skala mm dari perubahan fase radar antar waktu. Kombinasi ini paling komprehensif untuk monitoring vulkanik.'},
+  {cat:'GIS Hardware', q:'Seorang peneliti ingin memetakan kesehatan tanaman padi di area persawahan 500 hektar secara efisien. Hardware GIS yang paling tepat adalah...', opts:['Total Station untuk mengukur tiap tanaman','Geodetic GNSS RTK untuk mengambil titik sampel','Multispectral drone (DJI Mavic 3M) untuk peta NDVI seluruh area','IoT weather station untuk monitoring suhu'], ans:2, exp:'Multispectral drone (seperti DJI Mavic 3M) adalah pilihan terbaik karena: (1) dapat memetakan 500 ha dalam waktu singkat, (2) sensor multispektral menghasilkan indeks NDVI, NDWI, dan indeks kesehatan tanaman lainnya, (3) resolusi spasial tinggi per piksel. Total station tidak efisien untuk area luas.'},
+  {cat:'GIS Hardware', q:'Untuk pemetaan bawah permukaan (subsurface mapping) dalam proyek arkeologi, hardware yang digunakan adalah...', opts:['RGB Drone','Ground Penetrating Radar (GPR) seperti Leica DS 2000, MALÄ','Total Station','LIDAR Drone'], ans:1, exp:'Ground Penetrating Radar (GPR) memancarkan gelombang radio ke bawah tanah dan merekam pantulannya untuk mendeteksi objek bawah permukaan. Platform: Leica DS 2000, MALÄ GeoDrone 80, RadSys Zond Aero. Output: radargram. Digunakan dalam arkeologi, geofisika, dan deteksi utilitas bawah tanah.'},
+  {cat:'GIS Hardware', q:'Dalam pemantauan banjir real-time, kombinasi sensor IoT dan remote sensing yang paling efektif adalah...', opts:['Total station + optical satellite saja','HOBO U20 (water level sensor) + Sentinel-1 SAR (radar satelit)','Thermal drone + NDVI multispectral','GNSS RTK + weather station'], ans:1, exp:'HOBO U20 (water level sensor) memberikan data ketinggian muka air sungai secara real-time. Sentinel-1 SAR (radar) sangat efektif untuk pemetaan genangan banjir karena gelombang radar menembus awan — penting karena kondisi banjir sering berawan. Kombinasi ini mencakup monitoring point (sensor) dan area (satelit).'},
+  {cat:'Arsitektur SIG', q:'Apa perbedaan utama antara "System of Record" dan "System of Engagement" dalam evolusi arsitektur GIS?', opts:['System of Record lebih mahal, System of Engagement lebih murah','System of Record berfokus pada penyimpanan data (file/database), System of Engagement berfokus pada kolaborasi dan akses multi-user via web','System of Record hanya untuk pemerintah, System of Engagement untuk swasta','System of Record menggunakan Linux, System of Engagement menggunakan Windows'], ans:1, exp:'System of Record (File Based + Database Centric) berfokus pada penyimpanan dan pengelolaan data — lebih ke internal organisasi. System of Engagement (Server Centric + Web Centric) berfokus pada kolaborasi, berbagi, dan aksesibilitas data geospasial oleh banyak pengguna via web/mobile secara real-time.'},
+  {cat:'Arsitektur SIG', q:'Dalam three-tier GIS architecture, apa peran ArcGIS Server dalam ArcGIS Enterprise?', opts:['Sebagai user interface untuk pengguna akhir','Sebagai data storage untuk menyimpan geodatabase','Sebagai business logic tier yang menjalankan geoprocessing dan menyajikan layanan spasial','Sebagai gateway jaringan antara internet dan intranet'], ans:2, exp:'ArcGIS Server adalah Business Logic tier — menjalankan geoprocessing, menyajikan feature service, map service, image service, dan scene service. Dia yang "mengolah" permintaan dari Portal (presentation) dan mengambil data dari Data Store (data tier). ArcGIS Web Adaptor yang menjadi gateway.'},
+  {cat:'Arsitektur SIG', q:'Seorang developer memilih stack open source: PostGIS + GeoServer + OpenLayers. Secara berurutan, tier apa yang mereka wakili?', opts:['Presentation → Business Logic → Data','Business Logic → Data → Presentation','Data → Business Logic → Presentation','Data → Presentation → Business Logic'], ans:2, exp:'PostGIS = Data tier (database spasial berbasis PostgreSQL). GeoServer = Business Logic/Application tier (map server yang menyajikan WMS, WFS, WCS). OpenLayers = Presentation tier (library JavaScript untuk tampilan peta di browser). Urutan yang benar: Data → Business Logic → Presentation.'},
+  {cat:'Enterprise GIS', q:'Mengapa strategi deployment hybrid (cloud + on-premises) sering dipilih instansi pemerintah untuk Enterprise GIS?', opts:['Karena lebih murah dari on-premises saja','Karena data sensitif tetap aman di server lokal, sementara layanan publik dapat diakses via cloud','Karena lebih mudah dikelola oleh satu vendor','Karena cloud selalu lebih cepat dari on-premises'], ans:1, exp:'Hybrid deployment memungkinkan organisasi menyimpan data sensitif (data kependudukan, batas wilayah confidential) on-premises di balik firewall yang aman, sementara layanan publik (peta tata ruang yang bisa dilihat warga, dashboard publik) di-deploy di cloud untuk aksesibilitas yang lebih luas dengan biaya lebih efisien.'},
+  {cat:'Enterprise GIS', q:'Dalam ArcGIS Enterprise, apa fungsi spesifik ArcGIS Data Store?', opts:['Menyimpan dan mengelola lisensi pengguna','Sebagai antarmuka pengguna web','Menyimpan data untuk hosted services (relasional + tile cache) yang dikelola ArcGIS Server','Mengatur koneksi internet antara client dan server'], ans:2, exp:'ArcGIS Data Store menyimpan dua tipe data: (1) Relational Data Store — data fitur untuk hosted feature layers (dapat di-edit), (2) Tile Cache Data Store — tile cache untuk hosted tile layers. Ini adalah Data Tier dalam ArcGIS Enterprise yang terhubung langsung ke ArcGIS Server (hosting server).'},
+  {cat:'Manajemen Proyek', q:'Dalam kerangka PMBOK untuk proyek GIS, komponen mana yang berfungsi sebagai "perekat" yang mengintegrasikan semua 10 knowledge areas?', opts:['Scope Management','Risk Management','Project Integration Management','Stakeholder Management'], ans:2, exp:'Project Integration Management adalah panah horizontal utama dalam diagram PMBOK yang mengintegrasikan semua 10 knowledge areas — memastikan scope, time, cost, quality, HR, communications, risk, procurement, dan stakeholder management bekerja secara kohesif. Tanpa integrasi, proyek GIS bisa gagal walau masing-masing area dikelola dengan baik.'},
+  {cat:'Manajemen Proyek', q:'Sebuah proyek GIS untuk sistem pemantauan kebakaran hutan mengalami keterlambatan karena data citra satelit tidak tersedia sesuai jadwal. Aspek manajemen proyek mana yang kurang diantisipasi?', opts:['Time Management — tidak membuat jadwal','Cost Management — anggaran tidak cukup','Risk Management — risiko ketersediaan data tidak diantisipasi','Quality Management — standar kualitas tidak ditetapkan'], ans:2, exp:'Risk Management adalah yang kurang diantisipasi. Ketidaktersediaan data citra satelit sesuai jadwal adalah risiko yang seharusnya diidentifikasi lebih awal dengan risk register, kemudian dibuat rencana mitigasi (data alternatif, backup provider, buffer waktu akuisisi data). Risk Management mencakup identifikasi, analisis, dan respons terhadap risiko.'},
+  {cat:'Integrasi', q:'Sebuah pemda ingin membangun sistem early warning banjir terintegrasi. Urutkan secara benar pipeline data dari sensor ke dashboard publik:', opts:['Dashboard → GeoServer → PostGIS → Sensor IoT','Sensor IoT → PostGIS → GeoServer → WebGIS Dashboard','WebGIS → ArcGIS Server → Sensor → Database','Database → Sensor → Dashboard → Server'], ans:1, exp:'Alur yang benar: Sensor IoT (HOBO U20, weather station) → data disimpan ke PostGIS (database) → GeoServer membaca PostGIS dan menyajikan sebagai WMS/WFS → WebGIS Dashboard (OpenLayers/Leaflet di browser) menampilkan data real-time kepada pengguna. Ini adalah arsitektur open source three-tier yang lengkap.'},
+  {cat:'Integrasi', q:'Apa keunggulan utama penggunaan GeoNode dibandingkan membangun stack PostGIS + GeoServer + OpenLayers secara terpisah?', opts:['GeoNode lebih mahal sehingga lebih premium','GeoNode adalah platform terintegrasi yang sudah menggabungkan GeoServer, PostGIS, Django, manajemen konten, dan sharing — mengurangi konfigurasi manual','GeoNode hanya bisa digunakan di Windows','GeoNode tidak mendukung format data standar OGC'], ans:1, exp:'GeoNode adalah platform open source siap pakai yang mengintegrasikan GeoServer (map server) + GeoWebCache (tile caching) + PostGIS (database) + Django (web framework) + OpenLayers (client) + manajemen metadata + fitur sharing kolaboratif. Ini jauh lebih cepat di-deploy daripada mengkonfigurasi masing-masing komponen secara terpisah.'},
+  {cat:'Integrasi', q:'Dalam proyek pemetaan kawasan rawan bencana, mengapa penting mengintegrasikan data dari berbagai GIS hardware (GNSS, drone, satelit, IoT sensor) ke dalam satu Enterprise GIS?', opts:['Agar terlihat lebih profesional di depan pejabat','Karena setiap hardware menghasilkan jenis dan skala data berbeda yang saling melengkapi — integrasi memberikan gambaran komprehensif untuk pengambilan keputusan','Karena regulasi pemerintah mewajibkannya','Untuk menghemat biaya hardware'], ans:1, exp:'Setiap hardware menghasilkan data berbeda yang saling melengkapi: GNSS RTK (koordinat titik presisi) + drone LIDAR (model 3D terrain) + SAR satelit (deformasi permukaan luas) + IoT sensor (data real-time suhu, gas, curah hujan). Integrasi dalam Enterprise GIS memungkinkan analisis multi-layer yang komprehensif untuk pengambilan keputusan evakuasi, mitigasi, dan perencanaan tata ruang yang lebih baik.'}
+];
+
+let cur=0, score=0, answered=false, userAnswers=[];
+
+function initQuiz(){
+  cur=0; score=0; answered=false; userAnswers=[];
+  renderQ();
+}
+
+function renderQ(){
+  const w=document.getElementById('quiz-wrap');
+  if(cur>=questions.length){showResult();return;}
+  const q=questions[cur];
+  const pct=Math.round((cur/questions.length)*100);
+  w.innerHTML=`
+    <div class="card">
+      <div class="quiz-prog-wrap">
+        <div class="quiz-prog-text">Soal ${cur+1} dari ${questions.length} &nbsp;|&nbsp; Skor: ${score}/${questions.length} &nbsp;|&nbsp; <span class="badge badge-teal">${q.cat}</span></div>
+        <div class="quiz-bar"><div class="quiz-bar-inner" style="width:${pct}%"></div></div>
+      </div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-opts">
+        ${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="selectOpt(this,${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+      </div>
+      <div class="quiz-explain" id="qexp">💡 <strong>Penjelasan:</strong> ${q.exp}</div>
+      <div class="quiz-nav" id="qnav" style="display:none">
+        <span style="font-size:.82rem;color:var(--text-muted)" id="qresult"></span>
+        <button class="btn btn-primary" onclick="nextQ()">${cur<questions.length-1?'Soal Berikutnya →':'Lihat Hasil ↗'}</button>
+      </div>
+    </div>`;
+  answered=false;
+}
+
+function selectOpt(btn,idx){
+  if(answered)return;
+  answered=true;
+  const q=questions[cur];
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===q.ans)o.classList.add('correct');
+    else if(i===idx&&idx!==q.ans)o.classList.add('wrong');
+  });
+  const correct=idx===q.ans;
+  if(correct)score++;
+  userAnswers.push({qidx:cur,chosen:idx,correct});
+  document.getElementById('qexp').style.display='block';
+  document.getElementById('qnav').style.display='flex';
+  document.getElementById('qresult').textContent=correct?'✅ Benar!':'❌ Kurang tepat';
+}
+
+function nextQ(){cur++;renderQ();}
+
+function showResult(){
+  const pct=Math.round(score/questions.length*100);
+  const grade=pct>=85?'A':pct>=75?'B':pct>=65?'C':pct>=55?'D':'E';
+  const msg=pct>=85?'Luar biasa! Siap UAS 🎓':pct>=75?'Bagus! Sedikit lagi sempurna 📚':pct>=65?'Cukup baik, review materi yang salah 📖':pct>=55?'Perlu belajar lebih giat lagi ⚠️':'Review semua materi dari awal 📌';
+  const bycat={};
+  questions.forEach((q,i)=>{
+    if(!bycat[q.cat])bycat[q.cat]={total:0,correct:0};
+    bycat[q.cat].total++;
+    const ua=userAnswers.find(a=>a.qidx===i);
+    if(ua&&ua.correct)bycat[q.cat].correct++;
+  });
+  const catHTML=Object.entries(bycat).map(([cat,{total,correct}])=>{
+    const p=Math.round(correct/total*100);
+    const col=p>=80?'#057a55':p>=60?'#92400e':'#9b1c1c';
+    return `<div style="margin-bottom:.4rem"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>${cat}</span><span style="font-weight:600;color:${col}">${correct}/${total} (${p}%)</span></div><div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:${p}%;background:${col};border-radius:3px"></div></div></div>`;
+  }).join('');
+
+  const reviewHTML=questions.map((q,i)=>{
+    const ua=userAnswers.find(a=>a.qidx===i);
+    if(!ua)return '';
+    const cls=ua.correct?'right':'wrong';
+    return `<div class="review-item ${cls}">
+      <div class="review-q"><span class="badge ${ua.correct?'badge-green':'badge-red'}">${ua.correct?'✅ Benar':'❌ Salah'}</span> <span class="badge badge-teal" style="margin-left:.25rem">${q.cat}</span></div>
+      <div class="review-q" style="margin-top:.3rem">${i+1}. ${q.q}</div>
+      ${!ua.correct?`<div class="review-a" style="color:var(--red)">Jawabanmu: ${q.opts[ua.chosen]}</div>`:''}
+      <div class="review-a" style="color:var(--green)">Jawaban benar: ${q.opts[q.ans]}</div>
+      <div class="review-explain">${q.exp}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('quiz-wrap').innerHTML=`
+    <div class="card">
+      <div class="result-box">
+        <div class="result-emoji">${pct>=85?'🎓':pct>=75?'📚':pct>=65?'📖':'📌'}</div>
+        <div class="result-score" style="color:${pct>=75?'var(--green)':pct>=55?'#d97706':'var(--red)'}">Nilai ${grade}</div>
+        <div style="font-size:1.5rem;font-weight:700;margin-bottom:.25rem">${score} / ${questions.length} Benar (${pct}%)</div>
+        <div class="result-msg">${msg}</div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">📊 Hasil per Topik</div>
+        ${catHTML}
+      </div>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <div class="card-title">📝 Review Semua Jawaban</div>
+      ${reviewHTML}
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn btn-primary" onclick="initQuiz()">🔄 Ulangi Quiz dari Awal</button>
+      </div>
+    </div>`;
+}
+
+// Init quiz on load if needed
+</script>
+</body>
+</html>
